@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BUY.KANS — Канцелярия</title>
+  <meta name="description" content="Каталог BUY.KANS с фото. Корзина. PDF заказ с таблицей и картинками. Отправка в WhatsApp." />
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.66);
+      --border:rgba(255,255,255,.12);
+
+      --brand:#ff3d7f;
+      --brand2:#7c5cff;
+
+      --ok:#25d366;
+
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --r:18px;
+      --r2:26px;
+      --max:1100px;
+    }
+
+    [data-theme="light"]{
+      --bg:#f6f9ff;
+      --card:rgba(0,0,0,.04);
+      --card2:rgba(0,0,0,.07);
+      --text:rgba(10,14,25,.92);
+      --muted:rgba(10,14,25,.62);
+      --border:rgba(0,0,0,.10);
+      --shadow:0 18px 50px rgba(40,60,120,.16);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(124,92,255,.35), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(255,61,127,.30), transparent 60%),
+        radial-gradient(900px 700px at 50% 100%, rgba(42,167,227,.22), transparent 65%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:16px;}
+
+    .nav{
+      position: sticky; top:0; z-index:60;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    [data-theme="light"] .nav{
+      background: linear-gradient(to bottom, rgba(255,255,255,.80), rgba(255,255,255,0));
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+
+    .navrow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:12px 0; flex-wrap:wrap;
+    }
+    .brand{display:flex; align-items:center; gap:12px;}
+    .logo{
+      width:44px; height:44px; border-radius:16px;
+      display:grid; place-items:center; font-weight:1000;
+      background: linear-gradient(135deg, var(--brand2), var(--brand));
+      box-shadow: 0 12px 34px rgba(124,92,255,.25);
+    }
+    .brand h1{margin:0; font-size:16px; letter-spacing:.5px}
+    .brand p{margin:0; font-size:12px; color:var(--muted)}
+
+    .navright{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+
+    .chip{
+      border:1px solid var(--border);
+      background: var(--card);
+      border-radius:999px;
+      padding:10px 12px;
+      display:flex; align-items:center; gap:10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      width:min(460px, 70vw);
+    }
+    .chip input{
+      border:0; outline:0; background:transparent;
+      color:var(--text);
+      width:100%;
+      font-size:14px;
+    }
+
+    .miniBtn{
+      border:1px solid var(--border);
+      background: var(--card);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:900;
+      user-select:none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .miniBtn:hover{background: var(--card2); transform: translateY(-1px);}
+    .miniBtn:active{transform: translateY(0) scale(.99);}
+    .miniBtn.primary{
+      border:0;
+      color:#fff;
+      background: linear-gradient(135deg, var(--brand2), var(--brand));
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
+      border-radius: var(--r2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero{padding:14px 0 10px;}
+    .heroMain{padding:18px;}
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--card);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+    }
+    .title{margin:14px 0 8px; font-size:34px; line-height:1.05; letter-spacing:-.8px;}
+    .sub{margin:0; color:var(--muted); font-size:14px; line-height:1.6; max-width:60ch}
+
+    .clientBox{
+      margin-top:12px;
+      padding:14px;
+      border-radius: var(--r);
+      border:1px solid var(--border);
+      background: var(--card);
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .field label{display:block; color:var(--muted); font-size:12px; margin-bottom:6px; font-weight:900}
+    .field input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      outline:none;
+    }
+    .clientHint{grid-column:1 / -1; color:var(--muted); font-size:12px; margin-top:2px}
+
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+
+    .section{padding:16px 0 110px}
+    .sectionHead{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap}
+    .sectionHead h2{margin:0; font-size:18px}
+    .sectionHead p{margin:0; color:var(--muted); font-size:12px; font-weight:900}
+
+    .products{margin-top:12px; display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
+    @media (max-width: 980px){ .products{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width: 620px){ .products{grid-template-columns:1fr;} }
+
+    .p{
+      padding:14px;
+      border-radius: var(--r2);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
+      box-shadow: 0 16px 44px rgba(0,0,0,.16);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .imgBox{
+      border-radius:18px; overflow:hidden; border:1px solid var(--border);
+      background: var(--card);
+      aspect-ratio: 16/10;
+      display:grid; place-items:center;
+      margin-bottom:10px;
+    }
+    .imgBox img{width:100%; height:100%; object-fit:cover; display:block;}
+
+    .p h3{margin:2px 0 6px; font-size:15px}
+    .p .desc{margin:0; color:var(--muted); font-size:12px; line-height:1.55}
+
+    .row{margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
+    .price{display:flex; flex-direction:column; gap:2px;}
+    .price b{font-size:16px}
+    .price span{color:var(--muted); font-size:11px}
+
+    .qtyWrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .qtyInput{
+      width:110px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      outline:none;
+      font-weight:1000;
+      text-align:center;
+    }
+    .setBtn{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--card);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:1000;
+      transition: transform .15s ease, background .15s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    }
+    .setBtn:hover{transform: translateY(-1px); background: var(--card2);}
+    .setBtn.primary{border:0; color:#fff; background: linear-gradient(135deg, var(--brand2), var(--brand));}
+
+    .clientHint2{margin-top:10px; color:var(--muted); font-size:12px; font-weight:900}
+
+    .empty{
+      padding:18px;
+      border-radius: var(--r2);
+      border:1px dashed rgba(255,255,255,.22);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-weight:1000;
+      grid-column:1/-1;
+      text-align:center;
+    }
+    [data-theme="light"] .empty{
+      border:1px dashed rgba(0,0,0,.18);
+      background: rgba(0,0,0,.03);
+    }
+
+    .bar{
+      position:fixed; left:50%; transform:translateX(-50%);
+      bottom:12px; z-index:70;
+      width:min(var(--max), calc(100% - 24px));
+      border-radius: 18px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+      padding:10px;
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      box-shadow: var(--shadow);
+    }
+    [data-theme="light"] .bar{background: rgba(255,255,255,.78);}
+
+    .bar .left{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .count{
+      padding:8px 12px;
+      border-radius:999px;
+      background: var(--card);
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:1000;
+    }
+    .bar small{color:var(--muted); font-weight:900}
+    .bar .right{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+
+    .btn{
+      border:1px solid var(--border);
+      background: var(--card);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:1000;
+      transition: transform .15s ease, background .15s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background: var(--card2);}
+    .btn:active{transform: translateY(0) scale(.99);}
+    .btn.wa{border:0; color:#fff; background: linear-gradient(135deg, #1fb75a, var(--ok));}
+
+    .toast{
+      position: fixed; left:50%; transform:translateX(-50%);
+      top:18px; z-index:90;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.92);
+      display:none;
+      font-weight:1000;
+    }
+    [data-theme="light"] .toast{background: rgba(255,255,255,.90); color: rgba(0,0,0,.85);}
+    .toast.show{display:block; animation: pop .25s ease;}
+    @keyframes pop{from{transform:translateX(-50%) translateY(-6px); opacity:.2} to{transform:translateX(-50%) translateY(0); opacity:1}}
+
+    @media (max-width: 560px){
+      .wrap{padding:14px;}
+      .navrow{flex-direction:column; align-items:stretch}
+      .navright{justify-content:flex-start}
+      .chip{width:100%}
+      .title{font-size:30px}
+      .sub{font-size:14px}
+      .heroMain{padding:16px}
+      .clientBox{grid-template-columns:1fr;}
+
+      .bar{
+        border-radius: 16px;
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .bar .left{justify-content:space-between}
+      .bar .right{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap:8px;
+      }
+      #waText{grid-column:1/-1;}
+    }
+  </style>
+
+  <!-- PDF libs -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="wrap">
+      <div class="navrow">
+        <a class="brand" href="#top" aria-label="BUY.KANS">
+          <div class="logo">BK</div>
+          <div>
+            <h1>BUY.KANS</h1>
+            <p>Школа • Офис • Творчество</p>
+          </div>
+        </a>
+
+        <div class="navright">
+          <div class="chip" title="Поиск по товарам">
+            🔎 <input id="q" placeholder="Поиск: тетрадь, ручка, аракл, арт..." autocomplete="off" />
+            <button class="miniBtn" id="clearSearchBtn" type="button" title="Очистить поиск">✕</button>
+          </div>
+
+          <button class="miniBtn" id="themeBtn" type="button">🌓 Тема</button>
+          <button class="miniBtn primary" id="scrollCatalogBtn" type="button">Каталог</button>
+          <a class="miniBtn" href="https://t.me/stationerybaisat" target="_blank" rel="noreferrer">Telegram</a>
+          <a class="miniBtn" href="https://wa.me/77074975195" target="_blank" rel="noreferrer">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="top" class="wrap">
+    <section class="hero">
+      <div class="card heroMain">
+        <div class="kicker">🧺 Корзина • 📄 PDF (таблица + фото) • 💬 WhatsApp</div>
+        <h2 class="title">Каталог BUY.KANS</h2>
+        <p class="sub">
+          Выбирай товары → вводи количество → отправляй заказ в WhatsApp.
+          В PDF будет таблица + фото + имя и город клиента.
+        </p>
+
+        <div class="clientBox">
+          <div class="field">
+            <label for="clientName">Имя клиента</label>
+            <input id="clientName" placeholder="Например: Асем" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="clientCity">Город</label>
+            <input id="clientCity" placeholder="Например: Алматы" autocomplete="address-level2" />
+          </div>
+          <div class="clientHint">Данные сохраняются автоматически и добавятся в WhatsApp + PDF.</div>
+        </div>
+
+        <div class="ctaRow">
+          <button class="miniBtn" id="clearCartBtn" type="button">🧹 Очистить корзину</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalog" class="section">
+      <div class="sectionHead">
+        <div>
+          <h2>Каталог</h2>
+          <p id="resultsHint">Поиск по названию / описанию / артикулу</p>
+        </div>
+      </div>
+
+      <div class="products" id="products"></div>
+    </section>
+  </div>
+
+  <div class="bar">
+    <div class="left">
+      <span class="count" id="cartCount">Корзина: 0</span>
+      <small id="cartSum">Сумма: 0 ₸</small>
+    </div>
+    <div class="right">
+      <button class="btn wa" id="waText" type="button">💬 Заказ в WhatsApp</button>
+      <button class="btn" id="pdfBtn" type="button">📄 Скачать PDF</button>
+      <button class="btn" id="sharePdfBtn" type="button">📤 Поделиться PDF</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Готово</div>
+
+  <!-- PDF AREA -->
+  <div id="pdfArea" style="position:fixed; left:-99999px; top:0; width:794px; background:#fff; color:#111; padding:28px; font-family:Arial, sans-serif;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+      <div>
+        <div style="font-size:22px; font-weight:900; letter-spacing:2px;">BUY.KANS</div>
+        <div style="font-size:12px; color:#666; margin-top:4px;">Заказ клиента</div>
+        <div style="font-size:12px; color:#333; margin-top:10px;">
+          <div><b>Имя:</b> <span id="pdfClientName">—</span></div>
+          <div style="margin-top:4px;"><b>Город:</b> <span id="pdfClientCity">—</span></div>
+        </div>
+      </div>
+      <div style="text-align:right; font-size:12px; color:#444;">
+        <div id="pdfDate"></div>
+        <div style="margin-top:8px;">WhatsApp: +7 707 497 5195</div>
+        <div style="margin-top:2px;">Telegram: @stationerybaisat</div>
+      </div>
+    </div>
+
+    <hr style="border:none; border-top:1px solid #e6e6e6; margin:14px 0 16px;">
+
+    <div style="margin-top:8px; font-size:14px; font-weight:800;">Список товаров</div>
+
+    <table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:13px;">
+      <thead>
+        <tr style="background:#f4f6ff;">
+          <th style="text-align:left; padding:10px; border:1px solid #e6e6e6; width:64px;">Фото</th>
+          <th style="text-align:left; padding:10px; border:1px solid #e6e6e6;">Товар</th>
+          <th style="text-align:center; padding:10px; border:1px solid #e6e6e6; width:70px;">Кол-во</th>
+          <th style="text-align:right; padding:10px; border:1px solid #e6e6e6; width:110px;">Цена</th>
+          <th style="text-align:right; padding:10px; border:1px solid #e6e6e6; width:120px;">Сумма</th>
+        </tr>
+      </thead>
+      <tbody id="pdfRows"></tbody>
+    </table>
+
+    <div style="display:flex; justify-content:flex-end; margin-top:14px;">
+      <div style="min-width:280px; font-size:13px;">
+        <div style="display:flex; justify-content:space-between; padding:8px 0;">
+          <span style="color:#555;">Итого:</span>
+          <b id="pdfTotal">0 ₸</b>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px; font-size:12px; color:#666;">
+      Спасибо за заказ ❤️ BUY.KANS
+    </div>
+  </div>
+
+  <script>
+    // ===== BASE для картинок (чтобы работало на GitHub Pages) =====
+    const BASE = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
+    const SHOP = { phoneWa: "77074975195" };
+
+    // ===== ТОВАРЫ =====
+    // ✅ картинки положи в папку /images рядом с index.html (см. список ниже)
+    const PRODUCTS = [
+      {
+        id: "set-a201",
+        name: "Набор — Арт A201",
+        price: 4500,
+        img: BASE + "images/a201.jpg",
+        desc: "Подарочный набор. Артикул: A201."
+      },
+      {
+        id: "notebook-qd-19943",
+        name: "Блокнот A5 — Арт QD-19943",
+        price: 0, // ⚠️ поставь сюда цену, когда будет
+        img: BASE + "images/qd-19943.jpg",
+        desc: "Блокнот A5. Артикул: QD-19943. (Цена уточняется)"
+      },
+      {
+        id: "set-20006",
+        name: "Набор — Арт 20006",
+        price: 1500,
+        img: BASE + "images/20006.jpg",
+        desc: "Набор с блокнотом и ручкой. Артикул: 20006."
+      },
+      {
+        id: "demo-clock",
+        name: "Демонстрационный сағат (учебные часы)",
+        price: 180,
+        img: BASE + "images/demo-clock.jpg",
+        desc: "Обучающие часы для детей, подвижные стрелки."
+      }
+    ];
+
+    // ===== DOM =====
+    const elQ = document.getElementById("q");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const resultsHint = document.getElementById("resultsHint");
+
+    const elProducts = document.getElementById("products");
+
+    const clearCartBtn = document.getElementById("clearCartBtn");
+    const scrollCatalogBtn = document.getElementById("scrollCatalogBtn");
+
+    const themeBtn = document.getElementById("themeBtn");
+    const elCartCount = document.getElementById("cartCount");
+    const elCartSum = document.getElementById("cartSum");
+    const elToast = document.getElementById("toast");
+
+    const btnWaText = document.getElementById("waText");
+    const btnPdf = document.getElementById("pdfBtn");
+    const btnSharePdf = document.getElementById("sharePdfBtn");
+
+    const clientName = document.getElementById("clientName");
+    const clientCity = document.getElementById("clientCity");
+
+    const pdfArea = document.getElementById("pdfArea");
+    const pdfRows = document.getElementById("pdfRows");
+    const pdfTotal = document.getElementById("pdfTotal");
+    const pdfDate = document.getElementById("pdfDate");
+    const pdfClientName = document.getElementById("pdfClientName");
+    const pdfClientCity = document.getElementById("pdfClientCity");
+
+    // ===== CART =====
+    const cart = new Map(); // id -> qty
+
+    // ===== UTILS =====
+    const fmt = (n)=> new Intl.NumberFormat("ru-RU").format(Number(n||0));
+    const escapeHtml = (s)=> String(s).replace(/[&<>"']/g, m=>({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[m]));
+
+    const norm = (s)=> String(s||"")
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+      .replace(/ё/g,"е")
+      .trim();
+
+    function toast(msg){
+      elToast.textContent = msg;
+      elToast.classList.add("show");
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> elToast.classList.remove("show"), 1600);
+    }
+
+    function saveCart(){
+      const obj = {};
+      cart.forEach((v,k)=> obj[k]=v);
+      localStorage.setItem("bk_cart", JSON.stringify(obj));
+    }
+    function loadCart(){
+      try{
+        const obj = JSON.parse(localStorage.getItem("bk_cart") || "{}");
+        Object.entries(obj).forEach(([k,v])=>{
+          const n = Number(v)||0;
+          if(n>0) cart.set(k,n);
+        });
+      }catch(e){}
+    }
+
+    function saveClient(){
+      localStorage.setItem("bk_client_name", clientName.value.trim());
+      localStorage.setItem("bk_client_city", clientCity.value.trim());
+    }
+    function loadClient(){
+      clientName.value = localStorage.getItem("bk_client_name") || "";
+      clientCity.value = localStorage.getItem("bk_client_city") || "";
+    }
+    clientName.addEventListener("input", saveClient);
+    clientCity.addEventListener("input", saveClient);
+
+    function getClient(){
+      return { name:(clientName.value||"").trim(), city:(clientCity.value||"").trim() };
+    }
+
+    function cartItems(){
+      const items = [];
+      cart.forEach((qty,id)=>{
+        const p = PRODUCTS.find(x=>x.id===id);
+        if(p) items.push({p, qty});
+      });
+      return items;
+    }
+
+    function cartTotal(){
+      // цена может быть 0 (если не указали) — тогда просто не добавляем к сумме
+      return cartItems().reduce((sum, it)=> sum + (Number(it.p.price)||0) * it.qty, 0);
+    }
+
+    function updateBar(){
+      const itemsCount = cartItems().reduce((s,it)=>s+it.qty,0);
+      elCartCount.textContent = `Корзина: ${itemsCount}`;
+      elCartSum.textContent = `Сумма: ${fmt(cartTotal())} ₸`;
+    }
+
+    // ===== THEME =====
+    const savedTheme = localStorage.getItem("bk_theme");
+    if(savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+    themeBtn.addEventListener("click", ()=>{
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      const next = cur === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("bk_theme", next);
+    });
+
+    // ===== SEARCH =====
+    function applySearchInput(){ renderProducts(); }
+    let searchTimer = null;
+    function debounceSearch(){
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(applySearchInput, 120);
+    }
+    clearSearchBtn.addEventListener("click", ()=>{
+      elQ.value = "";
+      renderProducts();
+      elQ.focus();
+    });
+
+    // ===== PRODUCTS RENDER =====
+    function setQty(id, qty){
+      const n = Math.max(0, Math.min(9999, Number(qty)||0));
+      if(n===0) cart.delete(id);
+      else cart.set(id, n);
+      saveCart();
+      updateBar();
+    }
+
+    function renderProducts(){
+      const q = norm(elQ.value);
+
+      const list = PRODUCTS.filter(p=>{
+        const hay = norm((p.name||"") + " " + (p.desc||""));
+        return !q || hay.includes(q);
+      });
+
+      resultsHint.textContent = q
+        ? `Результаты: "${elQ.value.trim()}" • найдено: ${list.length}`
+        : `Товаров: ${list.length}`;
+
+      elProducts.innerHTML = "";
+
+      if(list.length===0){
+        elProducts.innerHTML = `<div class="empty">Ничего не найдено 😕<br>Попробуй другое слово или нажми ✕</div>`;
+        updateBar();
+        return;
+      }
+
+      list.forEach(p=>{
+        const qty = cart.get(p.id) || 0;
+        const priceText = (Number(p.price)||0) > 0 ? `${fmt(p.price)} ₸` : `Цена: уточнить`;
+
+        const card = document.createElement("div");
+        card.className = "p";
+        card.innerHTML = `
+          <div class="imgBox">
+            <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"
+              onerror="this.style.display='none'; this.parentElement.textContent='🖼 Фото не найдено';">
+          </div>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="desc">${escapeHtml(p.desc||"")}</p>
+
+          <div class="row">
+            <div class="price">
+              <b>${priceText}</b>
+              <span>за 1 шт</span>
+            </div>
+
+            <div class="qtyWrap">
+              <input class="qtyInput" inputmode="numeric" type="number" min="0" step="1"
+                     value="${qty}" data-id="${escapeHtml(p.id)}" aria-label="Количество" />
+              <button class="setBtn primary" type="button" data-set="${escapeHtml(p.id)}">Применить</button>
+            </div>
+          </div>
+
+          <div class="clientHint2">В корзине: <b id="inCart-${escapeHtml(p.id)}">${qty}</b></div>
+        `;
+
+        // ввод количества
+        const input = card.querySelector(".qtyInput");
+        const btnSet = card.querySelector("[data-set]");
+
+        function applyFromInput(){
+          const id = input.getAttribute("data-id");
+          const val = input.value;
+          setQty(id, val);
+          const b = card.querySelector(`#inCart-${CSS.escape(id)}`);
+          if(b) b.textContent = String(cart.get(id) || 0);
+          toast("Количество обновлено");
+        }
+
+        btnSet.addEventListener("click", applyFromInput);
+        input.addEventListener("keydown", (e)=>{ if(e.key==="Enter") applyFromInput(); });
+
+        // мягкое авто-применение через 600мс после ввода
+        let t=null;
+        input.addEventListener("input", ()=>{
+          clearTimeout(t);
+          t=setTimeout(()=>{ 
+            const id = input.getAttribute("data-id");
+            setQty(id, input.value);
+            const b = card.querySelector(`#inCart-${CSS.escape(id)}`);
+            if(b) b.textContent = String(cart.get(id) || 0);
+          }, 600);
+        });
+
+        elProducts.appendChild(card);
+      });
+
+      updateBar();
+    }
+
+    // ===== CLEAR CART =====
+    clearCartBtn.addEventListener("click", ()=>{
+      cart.clear();
+      saveCart();
+      renderProducts();
+      toast("Корзина очищена");
+    });
+
+    scrollCatalogBtn.addEventListener("click", ()=>{
+      document.getElementById("catalog").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    // ===== WHATSAPP ORDER =====
+    function buildTextOrder(){
+      const items = cartItems();
+      const c = getClient();
+
+      if(items.length===0){
+        return `Здравствуйте! Хочу сделать заказ ✅\nИмя: ${c.name||"—"}\nГород: ${c.city||"—"}\n\n(Корзина пустая)`;
+      }
+
+      const lines = [];
+      lines.push("Здравствуйте! Хочу сделать заказ ✅");
+      lines.push(`Имя: ${c.name||"—"}`);
+      lines.push(`Город: ${c.city||"—"}`);
+      lines.push("");
+      lines.push("🧾 Список товаров:");
+
+      items.forEach((it, i)=>{
+        const price = Number(it.p.price)||0;
+        const sum = price * it.qty;
+        const priceTxt = price>0 ? `${fmt(price)} ₸` : `цена уточнить`;
+        const sumTxt = price>0 ? `${fmt(sum)} ₸` : `—`;
+        lines.push(`${i+1}) ${it.p.name} — ${it.qty} шт × ${priceTxt} = ${sumTxt}`);
+      });
+
+      lines.push("");
+      lines.push(`Итого: ${fmt(cartTotal())} ₸`);
+      return lines.join("\n");
+    }
+
+    btnWaText.addEventListener("click", ()=>{
+      const c = getClient();
+      if(!c.name){ toast("Введите имя клиента"); clientName.focus(); return; }
+      if(!c.city){ toast("Введите город клиента"); clientCity.focus(); return; }
+
+      const text = buildTextOrder();
+      const url = `https://wa.me/${SHOP.phoneWa}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    });
+
+    // ===== PDF =====
+    function fillPdfArea(){
+      const items = cartItems();
+      const c = getClient();
+
+      pdfClientName.textContent = c.name ? c.name : "—";
+      pdfClientCity.textContent = c.city ? c.city : "—";
+
+      pdfRows.innerHTML = "";
+      pdfDate.textContent = new Date().toLocaleString("ru-RU");
+
+      if(items.length===0){
+        pdfRows.innerHTML = `
+          <tr>
+            <td colspan="5" style="padding:12px; border:1px solid #e6e6e6; color:#666;">
+              Корзина пустая
+            </td>
+          </tr>`;
+        pdfTotal.textContent = "0 ₸";
+        return;
+      }
+
+      items.forEach(it=>{
+        const price = Number(it.p.price)||0;
+        const sum = price * it.qty;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="padding:8px; border:1px solid #e6e6e6;">
+            <img src="${it.p.img}" crossorigin="anonymous"
+                 style="width:48px; height:48px; object-fit:cover; border-radius:10px; border:1px solid #eee"
+                 onerror="this.style.display='none'">
+          </td>
+          <td style="padding:10px; border:1px solid #e6e6e6;">${escapeHtml(it.p.name)}</td>
+          <td style="padding:10px; border:1px solid #e6e6e6; text-align:center;">${it.qty}</td>
+          <td style="padding:10px; border:1px solid #e6e6e6; text-align:right;">${price>0 ? fmt(price)+" ₸" : "—"}</td>
+          <td style="padding:10px; border:1px solid #e6e6e6; text-align:right;">${price>0 ? fmt(sum)+" ₸" : "—"}</td>
+        `;
+        pdfRows.appendChild(tr);
+      });
+
+      pdfTotal.textContent = `${fmt(cartTotal())} ₸`;
+    }
+
+    async function makePdfBlob(){
+      fillPdfArea();
+
+      const imgs = Array.from(pdfArea.querySelectorAll("img"));
+      await Promise.all(imgs.map(img => new Promise(res=>{
+        if(!img.src) return res();
+        if(img.complete) return res();
+        img.onload = ()=>res();
+        img.onerror = ()=>res();
+      })));
+
+      await new Promise(r=>setTimeout(r, 200));
+
+      const canvas = await html2canvas(pdfArea, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff"
+      });
+      const imgData = canvas.toDataURL("image/png");
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "pt", "a4");
+
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+
+      const imgW = pageW;
+      const imgH = canvas.height * (imgW / canvas.width);
+
+      let y = 0;
+      pdf.addImage(imgData, "PNG", 0, y, imgW, imgH);
+
+      let heightLeft = imgH - pageH;
+      while(heightLeft > 0){
+        pdf.addPage();
+        y = - (imgH - heightLeft);
+        pdf.addImage(imgData, "PNG", 0, y, imgW, imgH);
+        heightLeft -= pageH;
+      }
+
+      return pdf.output("blob");
+    }
+
+    btnPdf.addEventListener("click", async ()=>{
+      try{
+        if(cartItems().length===0){ toast("Корзина пустая"); return; }
+        const blob = await makePdfBlob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "BUY.KANS_order.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(()=> URL.revokeObjectURL(url), 4000);
+        toast("PDF скачан");
+      }catch(e){
+        console.error(e);
+        toast("Ошибка PDF");
+      }
+    });
+
+    btnSharePdf.addEventListener("click", async ()=>{
+      try{
+        if(cartItems().length===0){ toast("Корзина пустая"); return; }
+
+        toast("Готовлю PDF...");
+        const blob = await makePdfBlob();
+        const file = new File([blob], "BUY.KANS_order.pdf", { type: "application/pdf" });
+
+        if (navigator.share && (!navigator.canShare || navigator.canShare({ files:[file] }))) {
+          try{
+            await navigator.share({
+              title: "BUY.KANS — Заказ",
+              text: "PDF заказа",
+              files: [file]
+            });
+            toast("Открыто меню Share");
+            return;
+          }catch(err){
+            if(String(err).toLowerCase().includes("abort")) return;
+          }
+        }
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "BUY.KANS_order.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(()=> URL.revokeObjectURL(url), 4000);
+
+        toast("Скачала PDF. Открой Файлы → Поделиться → WhatsApp");
+      }catch(e){
+        console.error(e);
+        toast("Не получилось поделиться");
+      }
+    });
+
+    // ===== INIT =====
+    loadClient();
+    loadCart();
+    renderProducts();
+
+    elQ.addEventListener("input", debounceSearch);
+    elQ.addEventListener("keydown", (e)=>{ if(e.key==="Enter") applySearchInput(); });
+  </script>
+</body>
+</html>
