@@ -106,6 +106,10 @@
       user-select:none;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
       transition: transform .15s ease, background .15s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
     .miniBtn:hover{background: var(--card2); transform: translateY(-1px);}
     .miniBtn:active{transform: translateY(0) scale(.99);}
@@ -169,9 +173,8 @@
     .sectionHead h2{margin:0; font-size:18px}
     .sectionHead p{margin:0; color:var(--muted); font-size:12px; font-weight:900}
 
-    /* ✅ 2 товара в ряд везде */
+    /* ✅ 2 товара в ряд */
     .products{margin-top:12px; display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;}
-    /* ✅ мобилка тоже 2 в ряд, но компактнее */
     @media (max-width: 620px){
       .products{
         grid-template-columns: repeat(2, 1fr);
@@ -179,7 +182,6 @@
       }
     }
 
-    /* карточка компактнее */
     .p{
       padding:12px;
       border-radius: var(--r2);
@@ -357,38 +359,31 @@
       #waText{grid-column:1/-1;}
     }
 
-    /* ✅ ДОБАВЛЕНО: максимально компактная мобилка (2 товара в ряд) */
+    /* ✅ компактная мобилка (карточки) */
     @media (max-width: 560px){
       .p{
         padding:10px;
         border-radius:18px;
       }
-
       .imgBox{
         border-radius:14px;
         margin-bottom:8px;
       }
-
-      .imgBox img{
-        padding:4px;
-      }
+      .imgBox img{padding:4px;}
 
       .p h3{
         font-size:13px;
         margin:2px 0 4px;
         line-height:1.2;
       }
-
       .p .desc{
         font-size:11px;
         line-height:1.35;
       }
-
       .row{
         margin-top:8px;
         gap:8px;
       }
-
       .price b{font-size:14px}
       .price span{font-size:10px}
 
@@ -396,6 +391,54 @@
       .qtyInput{width:64px; padding:8px 10px}
       .qtyBtn{width:34px; height:34px}
       .setBtn{padding:8px 10px; font-size:12px}
+    }
+
+    /* ✅ НОВОЕ: ультра-компактная шапка + кнопки в 2 колонки */
+    @media (max-width: 560px){
+      .wrap{ padding:8px; }
+
+      .navrow{
+        gap:6px;
+        padding:6px 0;
+      }
+
+      .logo{
+        width:32px;
+        height:32px;
+        border-radius:12px;
+        font-size:13px;
+      }
+
+      .brand{ gap:10px; }
+      .brand h1{ font-size:13px; }
+      .brand p{ font-size:10px; }
+
+      .chip{
+        padding:6px 8px;
+        gap:6px;
+        border-radius:16px;
+      }
+      .chip input{ font-size:12px; }
+
+      .navright{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap:6px;
+        width:100%;
+        justify-content:stretch;
+      }
+
+      .miniBtn{
+        padding:7px 8px;
+        font-size:12px;
+        border-radius:14px;
+      }
+
+      .miniBtn.primary{
+        grid-column:1 / -1;
+        padding:8px;
+        font-size:13px;
+      }
     }
   </style>
 
@@ -535,47 +578,19 @@
   </div>
 
   <script>
-    // ===== BASE для картинок (чтобы работало на GitHub Pages) =====
     const BASE = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
     const SHOP = { phoneWa: "77074975195" };
 
-    // ===== ТОВАРЫ =====
     const PRODUCTS = [
-      {
-        id: "set-a201",
-        name: "Набор — Арт A201",
-        price: 4500,
-        img: BASE + "images/a201.jpg",
-        desc: "Подарочный набор. Артикул: A201."
-      },
-      {
-        id: "notebook-qd-19943",
-        name: "Блокнот A5 — Арт QD-19943",
-        price: 1300,
-        img: BASE + "images/qd-19943.jpg",
-        desc: "Блокнот A5. Артикул: QD-19943."
-      },
-      {
-        id: "set-20006",
-        name: "Набор — Арт 20006",
-        price: 1500,
-        img: BASE + "images/20006.jpg",
-        desc: "Набор с блокнотом и ручкой. Артикул: 20006."
-      },
-      {
-        id: "demo-clock",
-        name: "Демонстрационный сағат (учебные часы)",
-        price: 180,
-        img: BASE + "images/demo-clock.jpg",
-        desc: "Обучающие часы для детей, подвижные стрелки."
-      }
+      { id:"set-a201", name:"Набор — Арт A201", price:4500, img:BASE+"images/a201.jpg", desc:"Подарочный набор. Артикул: A201." },
+      { id:"notebook-qd-19943", name:"Блокнот A5 — Арт QD-19943", price:1300, img:BASE+"images/qd-19943.jpg", desc:"Блокнот A5. Артикул: QD-19943." },
+      { id:"set-20006", name:"Набор — Арт 20006", price:1500, img:BASE+"images/20006.jpg", desc:"Набор с блокнотом и ручкой. Артикул: 20006." },
+      { id:"demo-clock", name:"Демонстрационный сағат (учебные часы)", price:180, img:BASE+"images/demo-clock.jpg", desc:"Обучающие часы для детей, подвижные стрелки." }
     ];
 
-    // ===== DOM =====
     const elQ = document.getElementById("q");
     const clearSearchBtn = document.getElementById("clearSearchBtn");
     const resultsHint = document.getElementById("resultsHint");
-
     const elProducts = document.getElementById("products");
 
     const clearCartBtn = document.getElementById("clearCartBtn");
@@ -600,10 +615,8 @@
     const pdfClientName = document.getElementById("pdfClientName");
     const pdfClientCity = document.getElementById("pdfClientCity");
 
-    // ===== CART =====
-    const cart = new Map(); // id -> qty
+    const cart = new Map();
 
-    // ===== UTILS =====
     const fmt = (n)=> new Intl.NumberFormat("ru-RU").format(Number(n||0));
     const escapeHtml = (s)=> String(s).replace(/[&<>"']/g, m=>({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
@@ -671,7 +684,6 @@
       elCartSum.textContent = `Сумма: ${fmt(cartTotal())} ₸`;
     }
 
-    // ===== THEME =====
     const savedTheme = localStorage.getItem("bk_theme");
     if(savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
     themeBtn.addEventListener("click", ()=>{
@@ -681,7 +693,6 @@
       localStorage.setItem("bk_theme", next);
     });
 
-    // ===== SEARCH =====
     function applySearchInput(){ renderProducts(); }
     let searchTimer = null;
     function debounceSearch(){
@@ -694,7 +705,6 @@
       elQ.focus();
     });
 
-    // ===== PRODUCTS RENDER =====
     function setQty(id, qty){
       const n = Math.max(0, Math.min(9999, Number(qty)||0));
       if(n===0) cart.delete(id);
@@ -810,7 +820,6 @@
       updateBar();
     }
 
-    // ===== CLEAR CART =====
     clearCartBtn.addEventListener("click", ()=>{
       cart.clear();
       saveCart();
@@ -822,7 +831,6 @@
       document.getElementById("catalog").scrollIntoView({behavior:"smooth", block:"start"});
     });
 
-    // ===== WHATSAPP ORDER =====
     function buildTextOrder(){
       const items = cartItems();
       const c = getClient();
@@ -861,7 +869,6 @@
       window.open(url, "_blank");
     });
 
-    // ===== PDF =====
     function fillPdfArea(){
       const items = cartItems();
       const c = getClient();
@@ -1006,7 +1013,6 @@
       }
     });
 
-    // ===== INIT =====
     loadClient();
     loadCart();
     renderProducts();
