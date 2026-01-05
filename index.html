@@ -169,12 +169,19 @@
     .sectionHead h2{margin:0; font-size:18px}
     .sectionHead p{margin:0; color:var(--muted); font-size:12px; font-weight:900}
 
-    .products{margin-top:12px; display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
-    @media (max-width: 980px){ .products{grid-template-columns:repeat(2,1fr);} }
-    @media (max-width: 620px){ .products{grid-template-columns:1fr;} }
+    /* ✅ 2 товара в ряд везде */
+    .products{margin-top:12px; display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;}
+    /* ✅ мобилка тоже 2 в ряд, но компактнее */
+    @media (max-width: 620px){
+      .products{
+        grid-template-columns: repeat(2, 1fr);
+        gap:8px;
+      }
+    }
 
+    /* карточка компактнее */
     .p{
-      padding:14px;
+      padding:12px;
       border-radius: var(--r2);
       border:1px solid var(--border);
       background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
@@ -183,14 +190,20 @@
       overflow:hidden;
     }
 
+    /* фото квадрат + полностью видно */
     .imgBox{
       border-radius:18px; overflow:hidden; border:1px solid var(--border);
       background: var(--card);
-      aspect-ratio: 16/10;
+      aspect-ratio: 1 / 1;
       display:grid; place-items:center;
       margin-bottom:10px;
     }
-    .imgBox img{width:100%; height:100%; object-fit:cover; display:block;}
+    .imgBox img{
+      width:100%; height:100%;
+      object-fit:contain;
+      display:block;
+      padding:6px;
+    }
 
     .p h3{margin:2px 0 6px; font-size:15px}
     .p .desc{margin:0; color:var(--muted); font-size:12px; line-height:1.55}
@@ -202,7 +215,7 @@
 
     .qtyWrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
     .qtyInput{
-      width:110px;
+      width:88px;
       padding:10px 12px;
       border-radius:999px;
       border:1px solid var(--border);
@@ -212,6 +225,24 @@
       font-weight:1000;
       text-align:center;
     }
+
+    .qtyBtn{
+      width:38px; height:38px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor:pointer;
+      font-weight:1000;
+      display:grid;
+      place-items:center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      transition: transform .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .qtyBtn:hover{transform: translateY(-1px); background: var(--card2);}
+    .qtyBtn:active{transform: translateY(0) scale(.99);}
+
     .setBtn{
       padding:10px 12px;
       border-radius:999px;
@@ -324,6 +355,47 @@
         gap:8px;
       }
       #waText{grid-column:1/-1;}
+    }
+
+    /* ✅ ДОБАВЛЕНО: максимально компактная мобилка (2 товара в ряд) */
+    @media (max-width: 560px){
+      .p{
+        padding:10px;
+        border-radius:18px;
+      }
+
+      .imgBox{
+        border-radius:14px;
+        margin-bottom:8px;
+      }
+
+      .imgBox img{
+        padding:4px;
+      }
+
+      .p h3{
+        font-size:13px;
+        margin:2px 0 4px;
+        line-height:1.2;
+      }
+
+      .p .desc{
+        font-size:11px;
+        line-height:1.35;
+      }
+
+      .row{
+        margin-top:8px;
+        gap:8px;
+      }
+
+      .price b{font-size:14px}
+      .price span{font-size:10px}
+
+      .qtyWrap{gap:6px}
+      .qtyInput{width:64px; padding:8px 10px}
+      .qtyBtn{width:34px; height:34px}
+      .setBtn{padding:8px 10px; font-size:12px}
     }
   </style>
 
@@ -468,7 +540,6 @@
     const SHOP = { phoneWa: "77074975195" };
 
     // ===== ТОВАРЫ =====
-    // ✅ картинки положи в папку /images рядом с index.html (см. список ниже)
     const PRODUCTS = [
       {
         id: "set-a201",
@@ -480,9 +551,9 @@
       {
         id: "notebook-qd-19943",
         name: "Блокнот A5 — Арт QD-19943",
-        price: 0, // ⚠️ поставь сюда цену, когда будет
+        price: 1300,
         img: BASE + "images/qd-19943.jpg",
-        desc: "Блокнот A5. Артикул: QD-19943. (Цена уточняется)"
+        desc: "Блокнот A5. Артикул: QD-19943."
       },
       {
         id: "set-20006",
@@ -591,7 +662,6 @@
     }
 
     function cartTotal(){
-      // цена может быть 0 (если не указали) — тогда просто не добавляем к сумме
       return cartItems().reduce((sum, it)=> sum + (Number(it.p.price)||0) * it.qty, 0);
     }
 
@@ -674,8 +744,13 @@
             </div>
 
             <div class="qtyWrap">
+              <button class="qtyBtn" type="button" data-minus="${escapeHtml(p.id)}">−</button>
+
               <input class="qtyInput" inputmode="numeric" type="number" min="0" step="1"
                      value="${qty}" data-id="${escapeHtml(p.id)}" aria-label="Количество" />
+
+              <button class="qtyBtn" type="button" data-plus="${escapeHtml(p.id)}">+</button>
+
               <button class="setBtn primary" type="button" data-set="${escapeHtml(p.id)}">Применить</button>
             </div>
           </div>
@@ -683,31 +758,49 @@
           <div class="clientHint2">В корзине: <b id="inCart-${escapeHtml(p.id)}">${qty}</b></div>
         `;
 
-        // ввод количества
         const input = card.querySelector(".qtyInput");
         const btnSet = card.querySelector("[data-set]");
+        const btnPlus = card.querySelector("[data-plus]");
+        const btnMinus = card.querySelector("[data-minus]");
+
+        function syncUI(){
+          input.value = String(cart.get(p.id) || 0);
+          const b = card.querySelector(`#inCart-${CSS.escape(p.id)}`);
+          if(b) b.textContent = String(cart.get(p.id) || 0);
+        }
 
         function applyFromInput(){
           const id = input.getAttribute("data-id");
           const val = input.value;
           setQty(id, val);
-          const b = card.querySelector(`#inCart-${CSS.escape(id)}`);
-          if(b) b.textContent = String(cart.get(id) || 0);
+          syncUI();
           toast("Количество обновлено");
         }
+
+        btnPlus.addEventListener("click", ()=>{
+          const cur = Number(cart.get(p.id) || input.value || 0);
+          setQty(p.id, cur + 1);
+          syncUI();
+          toast("+1");
+        });
+
+        btnMinus.addEventListener("click", ()=>{
+          const cur = Number(cart.get(p.id) || input.value || 0);
+          setQty(p.id, Math.max(0, cur - 1));
+          syncUI();
+          toast("-1");
+        });
 
         btnSet.addEventListener("click", applyFromInput);
         input.addEventListener("keydown", (e)=>{ if(e.key==="Enter") applyFromInput(); });
 
-        // мягкое авто-применение через 600мс после ввода
         let t=null;
         input.addEventListener("input", ()=>{
           clearTimeout(t);
           t=setTimeout(()=>{ 
             const id = input.getAttribute("data-id");
             setQty(id, input.value);
-            const b = card.querySelector(`#inCart-${CSS.escape(id)}`);
-            if(b) b.textContent = String(cart.get(id) || 0);
+            syncUI();
           }, 600);
         });
 
@@ -798,7 +891,7 @@
         tr.innerHTML = `
           <td style="padding:8px; border:1px solid #e6e6e6;">
             <img src="${it.p.img}" crossorigin="anonymous"
-                 style="width:48px; height:48px; object-fit:cover; border-radius:10px; border:1px solid #eee"
+                 style="width:48px; height:48px; object-fit:contain; border-radius:10px; border:1px solid #eee; background:#fff;"
                  onerror="this.style.display='none'">
           </td>
           <td style="padding:10px; border:1px solid #e6e6e6;">${escapeHtml(it.p.name)}</td>
