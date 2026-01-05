@@ -1274,14 +1274,20 @@
     });
 
     cartModalSendWa.addEventListener("click", ()=>{
-      const c = getClient();
-      if(!c.name){ toast("Введите имя"); clientName.focus(); return; }
-      if(!c.city){ toast("Введите город"); clientCity.focus(); return; }
+  const c = getClient();
 
-      const text = buildTextOrder();
-      const url = `https://wa.me/${SHOP.phoneWa}?text=${encodeURIComponent(text)}`;
-      window.open(url, "_blank");
-    });
+  // ❗ Имя НЕ обязательное
+  // Оставляем только город (если хочешь — и его можно убрать)
+  if(!c.city){ 
+    toast("Введите город"); 
+    clientCity.focus(); 
+    return; 
+  }
+
+  const text = buildTextOrder();
+  const url = `https://wa.me/${SHOP.phoneWa}?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank");
+});
 
     // PDF
     function fillPdfArea(){
