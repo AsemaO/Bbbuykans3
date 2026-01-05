@@ -645,25 +645,46 @@
 
     // ✅ картинки положи в /images рядом с index.html
     const PRODUCTS = [
-      { id:"set-a201", name:"Набор — Арт A201", price:4500, img:BASE+"images/a201.jpg", desc:"Подарочный набор. Артикул: A201." },
-      { id:"notebook-qd-19943", name:"Блокнот A5 — Арт QD-19943", price:1300, img:BASE+"images/qd-19943.jpg", desc:"Блокнот A5. Артикул: QD-19943." },
-      { id:"set-20006", name:"Набор — Арт 20006", price:1500, img:BASE+"images/20006.jpg", desc:"Набор с блокнотом и ручкой. Артикул: 20006." },
-      { id:"demo-clock", name:"Демонстрационный сағат (учебные часы)", price:180, img:BASE+"images/demo-clock.jpg", desc:"Обучающие часы для детей, подвижные стрелки." },
-{  id: "notebook-2515",
-  name: "Блокнот Barbie",
-  price: 450,
-  img: BASE + "images/barbie-2515.jpg",
-  desc: "Блокнот. Арт 2515."},
-{ id: "biser-307-10",
-  name: "Бисер — набор",
-  price: 480,
-  img: BASE + "images/biser-307-10.jpg",
-  desc: "Набор бисера для творчества. Арт 307-10."},
-{id: "stickers-smile",
-  name: "Наклейки «Смайлик»",
-  price: 85,
-  img: BASE + "images/stickers-smile.jpg",
-  desc: "Набор наклеек со смайликами."}
+{
+  id:"set-20006",
+  name:"Набор",
+  art:"20006",
+  price:1500,
+  img:BASE+"images/20006.jpg",
+  desc:"Набор с блокнотом и ручкой."
+},
+{
+  id:"demo-clock",
+  name:"Демонстрационный сағат",
+  art:"—",
+  price:180,
+  img:BASE+"images/demo-clock.jpg",
+  desc:"Учебные часы."
+},
+{
+  id:"notebook-2515",
+  name:"Блокнот Barbie",
+  art:"2515",
+  price:450,
+  img:BASE+"images/barbie-2515.jpg",
+  desc:"Блокнот Barbie."
+},
+{
+  id:"biser-307-10",
+  name:"Бисер — набор",
+  art:"307-10",
+  price:480,
+  img:BASE+"images/IMG_0418.jpeg",
+  desc:"Набор бисера."
+},
+{
+  id:"stickers-smile",
+  name:"Наклейки «Смайлик»",
+  art:"—",
+  price:120,
+  img:BASE+"images/stickers-smile.jpg",
+  desc:"Наклейки."
+}
 ];
 
     const elQ = document.getElementById("q");
@@ -835,7 +856,12 @@
               onerror="this.style.display='none'; this.parentElement.textContent='🖼 Фото нет';">
           </div>
 
-          <h3>${escapeHtml(p.name)}</h3>
+<h3>
+  ${escapeHtml(p.name)}
+  <span style="font-size:11px; color:var(--muted); font-weight:900;">
+    • арт ${escapeHtml(p.art || "—")}
+  </span>
+</h3>
 
           <div class="row">
             <div class="price">
