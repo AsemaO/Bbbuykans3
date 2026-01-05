@@ -645,181 +645,176 @@
 
     // ✅ картинки положи в /images рядом с index.html
     const PRODUCTS = [
-{
-  id:"set-20006",
-  name:"Набор",
-  art:"20006",
-  price:1500,
-  img:BASE+"images/20006.jpg",
-  desc:"Набор с блокнотом и ручкой."
-},
-{
-  id:"demo-clock",
-  name:"Демонстрационный сағат",
-  art:"—",
-  price:180,
-  img:BASE+"images/demo-clock.jpg",
-  desc:"Учебные часы."
-},
-{
-  id:"notebook-2515",
-  name:"Блокнот Barbie",
-  art:"2515",
-  price:450,
-  img:BASE+"images/barbie-2515.jpg",
-  desc:"Блокнот Barbie."
-},
-{
-  id:"biser-307-10",
-  name:"Бисер — набор",
-  art:"307-10",
-  price:480,
-  img:BASE+"images/IMG_0418.jpeg",
-  desc:"Набор бисера."
-},
-{
-  id:"stickers-smile",
-  name:"Наклейки «Смайлик»",
-  art:"—",
-  price:120,
-  img:BASE+"images/stickers-smile.jpg",
-  desc:"Наклейки."
-},
-      {
-  id: "lupa-5x",
-  name: "Лупа с подсветкой",
-  art: "5x",
-  box: "40 шт",
-  price: 1800,
-  img: BASE + "images/lupa-5x.jpg",
-  desc: "Лупа с подсветкой. Арт 5x. В коробке 40 шт."
-},
-      {
-  id: "markers-5-1",
-  name: "Фломастеры 5+1",
-  price: 120,
-  img: BASE + "images/markers-5-1.jpg",
-  desc: "Фломастеры. Арт 5+1."
-},
-{
-  id: "markers-7-1",
-  name: "Фломастеры 7+1",
-  price: 180,
-  img: BASE + "images/markers-7-1.jpg",
-  desc: "Фломастеры. Арт 7+1."
-},
-{
-  id: "markers-9-1",
-  name: "Фломастеры 9+1",
-  price: 250,
-  img: BASE + "images/markers-9-1.jpg",
-  desc: "Фломастеры. Арт 9+1."
-},
-{
-  id: "markers-1686-6",
-  name: "Фломастеры 6 цветов",
-  price: 100,
-  img: BASE + "images/markers-1686-6.jpg",
-  desc: "Фломастеры 6 цветов. Арт 1686-6."
-},
-{
-  id: "markers-td-6865-06",
-  name: "Фломастеры 6 цветов",
-  price: 100,
-  img: BASE + "images/markers-td-6865-06.jpg",
-  desc: "Фломастеры 6 цветов. Арт TD-6865-06."
-},
-{
-  id: "pikmi-stick",
-  name: "Пикми палочка",
-  price: 150,
-  img: BASE + "images/pikmi-stick.jpg",
-  desc: "Пикми палочка."
-},
-{
-  id: "pikmi-stick-big",
-  name: "Большая пикми палочка",
-  price: 450,
-  img: BASE + "images/pikmi-stick-big.jpg",
-  desc: "Большая пикми палочка. В пачке 12 шт."
-},
-      {
-  id: "notebook-a5-580",
-  name: "Блокнот A5-580",
-  price: 550,
-  img: BASE + "images/notebook-a5-580.jpg",
-  desc: "Блокнот. Арт A5-580."
-},
-{
-  id: "touch-marker-30",
-  name: "Touch маркеры 30 цветов",
-  price: 1200,
-  img: BASE + "images/touch-marker-30.jpg",
-  desc: "Набор Touch маркеров, 30 цветов."
-},
-{
-  id: "notebook-5221",
-  name: "Блокнот 5221",
-  price: 550,
-  img: BASE + "images/notebook-5221.jpg",
-  desc: "Блокнот. Арт 5221."
-},
-{
-  id: "notebook-yl-a5-805",
-  name: "Блокнот YL-A5-805",
-  price: 550,
-  img: BASE + "images/notebook-yl-a5-805.jpg",
-  desc: "Блокнот. Арт YL-A5-805."
-},
-{
-  id: "notebook-2502",
-  name: "Блокнот 2502",
-  price: 300,
-  img: BASE + "images/notebook-2502.jpg",
-  desc: "Блокнот. Арт 2502."
-},
-{
-  id: "notebook-7125-1",
-  name: "Блокнот 7125-1",
-  price: 280,
-  img: BASE + "images/notebook-7125-1.jpg",
-  desc: "Блокнот. Арт 7125-1."
-},
-{
-  id: "coloring-4578",
-  name: "Раскраска 4578",
-  price: 650,
-  img: BASE + "images/coloring-4578.jpg",
-  desc: "Раскраска. Арт 4578."
-},
-{
-  id: "plasticine-6",
-  name: "Пластилин 6 цветов",
-  price: 260,
-  img: BASE + "images/plasticine-6.jpg",
-  desc: "Пластилин 6 цветов. Арт YL242802-6."
-},
-{
-  id: "plasticine-8",
-  name: "Пластилин 8 цветов",
-  price: 325,
-  img: BASE + "images/plasticine-8.jpg",
-  desc: "Пластилин 8 цветов. Арт YL242802-8."
-},
-{
-  id: "plasticine-10",
-  name: "Пластилин 10 цветов",
-  price: 420,
-  img: BASE + "images/plasticine-10.jpg",
-  desc: "Пластилин 10 цветов. Арт YL242802-10."
-},
-{
-  id: "plasticine-12",
-  name: "Пластилин 12 цветов",
-  price: 450,
-  img: BASE + "images/plasticine-12.jpg",
-  desc: "Пластилин 12 цветов. Арт YL242802-12."
-}
+const PRODUCTS = [
+  {
+    id:"set-20006",
+    name:"Набор (арт 20006)",
+    price:1500,
+    img:BASE+"images/20006.jpg",
+    desc:"Набор с блокнотом и ручкой."
+  },
+  {
+    id:"demo-clock",
+    name:"Демонстрационный сағат",
+    price:180,
+    img:BASE+"images/demo-clock.jpg",
+    desc:"Учебные часы."
+  },
+  {
+    id:"notebook-2515",
+    name:"Блокнот Barbie (арт 2515)",
+    price:450,
+    img:BASE+"images/barbie-2515.jpg",
+    desc:"Блокнот Barbie."
+  },
+  {
+    id:"biser-307-10",
+    name:"Бисер — набор (арт 307-10)",
+    price:480,
+    img:BASE+"images/biser-307-10.jpg",
+    desc:"Набор бисера."
+  },
+  {
+    id:"stickers-smile",
+    name:"Наклейки «Смайлик»",
+    price:120,
+    img:BASE+"images/stickers-smile.jpg",
+    desc:"Наклейки."
+  },
+  {
+    id:"lupa-5x",
+    name:"Лупа с подсветкой (арт 5x)",
+    price:1800,
+    img: BASE + "images/lupa-5x.jpg",
+    desc:"Лупа с подсветкой. В коробке 40 шт."
+  },
+  {
+    id:"markers-5-1",
+    name:"Фломастеры (арт 5+1)",
+    price:120,
+    img: BASE + "images/markers-5-1.jpg",
+    desc:"Фломастеры 5+1."
+  },
+  {
+    id:"markers-7-1",
+    name:"Фломастеры (арт 7+1)",
+    price:180,
+    img: BASE + "images/markers-7-1.jpg",
+    desc:"Фломастеры 7+1."
+  },
+  {
+    id:"markers-9-1",
+    name:"Фломастеры (арт 9+1)",
+    price:250,
+    img: BASE + "images/markers-9-1.jpg",
+    desc:"Фломастеры 9+1."
+  },
+  {
+    id:"markers-1686-6",
+    name:"Фломастеры 6 цветов (арт 1686-6)",
+    price:100,
+    img: BASE + "images/markers-1686-6.jpg",
+    desc:"Фломастеры 6 цветов."
+  },
+  {
+    id:"markers-td-6865-06",
+    name:"Фломастеры 6 цветов (арт TD-6865-06)",
+    price:100,
+    img: BASE + "images/markers-td-6865-06.jpg",
+    desc:"Фломастеры 6 цветов."
+  },
+  {
+    id:"pikmi-stick",
+    name:"Пикми палочка",
+    price:150,
+    img: BASE + "images/pikmi-stick.jpg",
+    desc:"Пикми палочка."
+  },
+  {
+    id:"pikmi-stick-big",
+    name:"Большая пикми палочка",
+    price:450,
+    img: BASE + "images/pikmi-stick-big.jpg",
+    desc:"В пачке 12 шт."
+  },
+  {
+    id:"notebook-a5-580",
+    name:"Блокнот (арт A5-580)",
+    price:550,
+    img: BASE + "images/notebook-a5-580.jpg",
+    desc:"Блокнот A5-580."
+  },
+  {
+    id:"touch-marker-30",
+    name:"Touch маркеры 30 цветов",
+    price:1200,
+    img: BASE + "images/touch-marker-30.jpg",
+    desc:"Набор Touch маркеров, 30 цветов."
+  },
+  {
+    id:"notebook-5221",
+    name:"Блокнот (арт 5221)",
+    price:550,
+    img: BASE + "images/notebook-5221.jpg",
+    desc:"Блокнот 5221."
+  },
+  {
+    id:"notebook-yl-a5-805",
+    name:"Блокнот (арт YL-A5-805)",
+    price:550,
+    img: BASE + "images/notebook-yl-a5-805.jpg",
+    desc:"Блокнот YL-A5-805."
+  },
+  {
+    id:"notebook-2502",
+    name:"Блокнот (арт 2502)",
+    price:300,
+    img: BASE + "images/notebook-2502.jpg",
+    desc:"Блокнот 2502."
+  },
+  {
+    id:"notebook-7125-1",
+    name:"Блокнот (арт 7125-1)",
+    price:280,
+    img: BASE + "images/notebook-7125-1.jpg",
+    desc:"Блокнот 7125-1."
+  },
+  {
+    id:"coloring-4578",
+    name:"Раскраска (арт 4578)",
+    price:650,
+    img: BASE + "images/coloring-4578.jpg",
+    desc:"Раскраска 4578."
+  },
+  {
+    id:"plasticine-6",
+    name:"Пластилин 6 цветов (арт YL242802-6)",
+    price:260,
+    img: BASE + "images/plasticine-6.jpg",
+    desc:"Пластилин 6 цветов."
+  },
+  {
+    id:"plasticine-8",
+    name:"Пластилин 8 цветов (арт YL242802-8)",
+    price:325,
+    img: BASE + "images/plasticine-8.jpg",
+    desc:"Пластилин 8 цветов."
+  },
+  {
+    id:"plasticine-10",
+    name:"Пластилин 10 цветов (арт YL242802-10)",
+    price:420,
+    img: BASE + "images/plasticine-10.jpg",
+    desc:"Пластилин 10 цветов."
+  },
+  {
+    id:"plasticine-12",
+    name:"Пластилин 12 цветов (арт YL242802-12)",
+    price:450,
+    img: BASE + "images/plasticine-12.jpg",
+    desc:"Пластилин 12 цветов."
+  }
+
 ];
 
     const elQ = document.getElementById("q");
@@ -991,12 +986,7 @@
               onerror="this.style.display='none'; this.parentElement.textContent='🖼 Фото нет';">
           </div>
 
-<h3>
-  ${escapeHtml(p.name)}
-  <span style="font-size:11px; color:var(--muted); font-weight:900;">
-    • арт ${escapeHtml(p.art || "—")}
-  </span>
-</h3>
+<h3>${escapeHtml(p.name)}</h3>
 
           <div class="row">
             <div class="price">
