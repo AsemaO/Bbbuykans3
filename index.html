@@ -17,6 +17,7 @@
 
       --brand:#ff3d7f;
       --brand2:#7c5cff;
+
       --ok:#25d366;
 
       --shadow:0 18px 50px rgba(0,0,0,.45);
@@ -51,30 +52,21 @@
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:16px;}
 
-    /* =========================
-       ✅ ВЕРХНЯЯ ВИЗИТКА (НЕ fixed, НЕ sticky)
-       Она стоит ТОЛЬКО сверху и уходит при скролле.
-       ========================= */
-    .topCard{
-      border:1px solid var(--border);
-      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
-      border-radius: var(--r2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
+    .nav{
+      position: sticky; top:0; z-index:60;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    [data-theme="light"] .nav{
+      background: linear-gradient(to bottom, rgba(255,255,255,.80), rgba(255,255,255,0));
+      border-bottom: 1px solid rgba(0,0,0,.06);
     }
 
-    .topInner{
-      padding:14px;
+    .navrow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:12px 0; flex-wrap:wrap;
     }
-
-    .topRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
     .brand{display:flex; align-items:center; gap:12px;}
     .logo{
       width:44px; height:44px; border-radius:16px;
@@ -85,10 +77,7 @@
     .brand h1{margin:0; font-size:16px; letter-spacing:.5px}
     .brand p{margin:0; font-size:12px; color:var(--muted)}
 
-    .navright{
-      display:flex; align-items:center; gap:10px;
-      flex-wrap:wrap; justify-content:flex-end;
-    }
+    .navright{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
 
     .chip{
       border:1px solid var(--border);
@@ -97,8 +86,7 @@
       padding:10px 12px;
       display:flex; align-items:center; gap:10px;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
-      width:min(520px, 100%);
-      flex: 1 1 380px;
+      width:min(460px, 70vw);
     }
     .chip input{
       border:0; outline:0; background:transparent;
@@ -118,8 +106,6 @@
       user-select:none;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
       transition: transform .15s ease, background .15s ease;
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      white-space:nowrap;
     }
     .miniBtn:hover{background: var(--card2); transform: translateY(-1px);}
     .miniBtn:active{transform: translateY(0) scale(.99);}
@@ -129,32 +115,34 @@
       background: linear-gradient(135deg, var(--brand2), var(--brand));
     }
 
-    /* ✅ круглые кнопки */
-    .miniBtn.circle{
-      width:44px; height:44px;
-      padding:0;
-      border-radius:999px;
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
+      border-radius: var(--r2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
     }
-    .miniBtn.circle .lbl{display:none;}
-    .miniBtn.circle .ico{font-size:18px; line-height:1;}
 
-    .title{
-      margin:12px 0 6px;
-      font-size:24px;
-      line-height:1.1;
-      letter-spacing:-.6px;
-    }
-    .sub{
-      margin:0;
+    .hero{padding:14px 0 10px;}
+    .heroMain{padding:18px;}
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: var(--card);
       color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-      max-width:70ch;
+      font-size:12px;
+      font-weight:900;
     }
+    .title{margin:14px 0 8px; font-size:34px; line-height:1.05; letter-spacing:-.8px;}
+    .sub{margin:0; color:var(--muted); font-size:14px; line-height:1.6; max-width:60ch}
 
     .clientBox{
       margin-top:12px;
-      padding:12px;
+      padding:14px;
       border-radius: var(--r);
       border:1px solid var(--border);
       background: var(--card);
@@ -172,76 +160,60 @@
       color: var(--text);
       outline:none;
     }
+    .clientHint{grid-column:1 / -1; color:var(--muted); font-size:12px; margin-top:2px}
 
     .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
 
-    /* =========================
-       Каталог
-       ========================= */
-    .section{padding:14px 0 110px}
+    .section{padding:16px 0 110px}
     .sectionHead{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap}
     .sectionHead h2{margin:0; font-size:18px}
     .sectionHead p{margin:0; color:var(--muted); font-size:12px; font-weight:900}
 
-    /* ✅ 2 товара в ряд на телефоне тоже */
-    .products{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:10px;
-    }
+    /* ✅ ИЗМЕНЕНО: по умолчанию 2 товара в ряд */
+    .products{margin-top:12px; display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;}
+    @media (max-width: 620px){ .products{grid-template-columns:1fr;} }
 
+    /* ✅ ИЗМЕНЕНО: карточка чуть компактнее */
     .p{
-      padding:10px;
-      border-radius: 18px;
+      padding:12px; /* было 14 */
+      border-radius: var(--r2);
       border:1px solid var(--border);
       background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
       box-shadow: 0 16px 44px rgba(0,0,0,.16);
+      position:relative;
       overflow:hidden;
     }
 
+    /* ✅ ИЗМЕНЕНО: фото квадрат + полностью видно */
     .imgBox{
-      border-radius:14px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      aspect-ratio: 4 / 3;
-      margin-bottom:8px;
+      border-radius:18px; overflow:hidden; border:1px solid var(--border);
+      background: var(--card);
+      aspect-ratio: 1 / 1; /* было 16/10 */
+      display:grid; place-items:center;
+      margin-bottom:10px;
     }
-    .imgBox img{width:100%; height:100%; object-fit:cover; display:block;}
-
-    .p h3{
-      margin:0 0 6px;
-      font-size:13px;
-      line-height:1.25;
-      font-weight:1000;
-    }
-    .p .desc{display:none;}
-
-    .row{
-      margin-top:8px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
+    .imgBox img{
+      width:100%; height:100%;
+      object-fit:contain;   /* было cover */
+      display:block;
+      padding:6px;
     }
 
+    .p h3{margin:2px 0 6px; font-size:15px}
+    .p .desc{margin:0; color:var(--muted); font-size:12px; line-height:1.55}
+
+    .row{margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
     .price{display:flex; flex-direction:column; gap:2px;}
-    .price b{font-size:14px}
-    .price span{color:var(--muted); font-size:10px}
+    .price b{font-size:16px}
+    .price span{color:var(--muted); font-size:11px}
 
-    .qtyWrap{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      flex-wrap:nowrap;
-    }
+    .qtyWrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
 
+    /* ✅ ИЗМЕНЕНО: input чуть уже, чтобы +/− влезали */
     .qtyInput{
-      width:48px;
-      padding:7px 7px;
-      border-radius:10px;
+      width:88px; /* было 110 */
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid var(--border);
       background: var(--card);
       color: var(--text);
@@ -250,9 +222,10 @@
       text-align:center;
     }
 
+    /* ✅ НОВОЕ: кнопки +/− */
     .qtyBtn{
-      width:32px; height:32px;
-      border-radius:10px;
+      width:38px; height:38px;
+      border-radius:999px;
       border:1px solid var(--border);
       background: var(--card);
       color: var(--text);
@@ -264,21 +237,24 @@
       transition: transform .15s ease, background .15s ease;
       user-select:none;
     }
+    .qtyBtn:hover{transform: translateY(-1px); background: var(--card2);}
+    .qtyBtn:active{transform: translateY(0) scale(.99);}
 
     .setBtn{
-      padding:7px 9px;
-      border-radius:10px;
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid var(--border);
       background: var(--card);
       color:var(--text);
       cursor:pointer;
       font-weight:1000;
+      transition: transform .15s ease, background .15s ease;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
-      font-size:12px;
     }
+    .setBtn:hover{transform: translateY(-1px); background: var(--card2);}
     .setBtn.primary{border:0; color:#fff; background: linear-gradient(135deg, var(--brand2), var(--brand));}
 
-    .clientHint2{margin-top:8px; color:var(--muted); font-size:12px; font-weight:900}
+    .clientHint2{margin-top:10px; color:var(--muted); font-size:12px; font-weight:900}
 
     .empty{
       padding:18px;
@@ -295,13 +271,10 @@
       background: rgba(0,0,0,.03);
     }
 
-    /* =========================
-       Нижняя панель (сделали меньше)
-       ========================= */
     .bar{
       position:fixed; left:50%; transform:translateX(-50%);
-      bottom:10px; z-index:70;
-      width:min(var(--max), calc(100% - 20px));
+      bottom:12px; z-index:70;
+      width:min(var(--max), calc(100% - 24px));
       border-radius: 18px;
       border:1px solid var(--border);
       background: rgba(0,0,0,.28);
@@ -321,50 +294,26 @@
       color:var(--muted);
       font-size:12px;
       font-weight:1000;
-      cursor:pointer;
     }
-    .bar small{color:var(--muted); font-weight:900; cursor:pointer;}
-
+    .bar small{color:var(--muted); font-weight:900}
     .bar .right{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
 
     .btn{
       border:1px solid var(--border);
       background: var(--card);
       color:var(--text);
-      padding:8px 10px; /* меньше */
+      padding:10px 12px;
       border-radius:999px;
       cursor:pointer;
       font-weight:1000;
+      transition: transform .15s ease, background .15s ease;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
       user-select:none;
-      font-size:13px;
     }
-    .btn.wa{
-      border:0; color:#fff;
-      padding:9px 10px; /* чуть больше, но всё равно меньше */
-      background: linear-gradient(135deg, #1fb75a, var(--ok));
-    }
+    .btn:hover{transform: translateY(-1px); background: var(--card2);}
+    .btn:active{transform: translateY(0) scale(.99);}
+    .btn.wa{border:0; color:#fff; background: linear-gradient(135deg, #1fb75a, var(--ok));}
 
-    @media (max-width: 560px){
-      .wrap{padding:10px;}
-      .chip{flex: 1 1 100%;}
-      .clientBox{grid-template-columns:1fr;}
-      .title{font-size:22px;}
-
-      .bar{
-        border-radius: 16px;
-        flex-direction:column;
-        align-items:stretch;
-      }
-      .bar .right{
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        gap:8px;
-      }
-      #waText{grid-column:1/-1;}
-    }
-
-    /* toast */
     .toast{
       position: fixed; left:50%; transform:translateX(-50%);
       top:18px; z-index:90;
@@ -381,149 +330,72 @@
     .toast.show{display:block; animation: pop .25s ease;}
     @keyframes pop{from{transform:translateX(-50%) translateY(-6px); opacity:.2} to{transform:translateX(-50%) translateY(0); opacity:1}}
 
-    /* =========================
-       Корзина (модалка)
-       ========================= */
-    .modal{
-      position:fixed; inset:0;
-      z-index:120;
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      padding:12px;
-      background: rgba(0,0,0,.45);
-      backdrop-filter: blur(6px);
-    }
-    .modal.show{display:flex;}
-    .sheet{
-      width:min(var(--max), 100%);
-      border-radius: 20px;
-      border:1px solid var(--border);
-      background: rgba(15,20,40,.92);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    [data-theme="light"] .sheet{ background: rgba(255,255,255,.96); }
+    @media (max-width: 560px){
+      .wrap{padding:14px;}
+      .navrow{flex-direction:column; align-items:stretch}
+      .navright{justify-content:flex-start}
+      .chip{width:100%}
+      .title{font-size:30px}
+      .sub{font-size:14px}
+      .heroMain{padding:16px}
+      .clientBox{grid-template-columns:1fr;}
 
-    .sheetHead{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:12px 12px;
-      border-bottom:1px solid var(--border);
+      .bar{
+        border-radius: 16px;
+        flex-direction:column;
+        align-items:stretch;
+      }
+      .bar .left{justify-content:space-between}
+      .bar .right{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap:8px;
+      }
+      #waText{grid-column:1/-1;}
     }
-    .sheetHead b{font-size:14px;}
-    .sheetHead .x{
-      width:38px; height:38px; border-radius:999px;
-      border:1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:1000;
-    }
-
-    .sheetBody{padding:12px; max-height:55vh; overflow:auto;}
-    .cartRow{
-      display:grid;
-      grid-template-columns: 54px 1fr auto;
-      gap:10px;
-      align-items:center;
-      padding:10px 0;
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    [data-theme="light"] .cartRow{border-bottom:1px solid rgba(0,0,0,.06);}
-
-    .cartImg{
-      width:54px; height:54px; border-radius:14px;
-      border:1px solid var(--border);
-      background: var(--card);
-      overflow:hidden;
-    }
-    .cartImg img{width:100%; height:100%; object-fit:cover; display:block;}
-
-    .cartInfo h4{margin:0; font-size:13px; line-height:1.25;}
-    .cartInfo small{display:block; margin-top:4px; color:var(--muted); font-weight:900;}
-
-    .cartQty{display:flex; align-items:center; gap:6px;}
-    .cartQty .qbtn{
-      width:34px; height:34px; border-radius:12px;
-      border:1px solid var(--border);
-      background: var(--card);
-      color:var(--text);
-      cursor:pointer;
-      font-weight:1000;
-      display:grid; place-items:center;
-    }
-    .cartQty .qval{
-      min-width:42px;
-      text-align:center;
-      padding:7px 8px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background: var(--card);
-      font-weight:1000;
-    }
-
-    .sheetFoot{
-      padding:12px;
-      border-top:1px solid var(--border);
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .sumBox{
-      display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
-      color:var(--muted); font-weight:1000;
-    }
-    .sumBox b{color:var(--text); font-size:14px;}
   </style>
 
+  <!-- PDF libs -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 
 <body>
-  <div id="top" class="wrap">
+  <div class="nav">
+    <div class="wrap">
+      <div class="navrow">
+        <a class="brand" href="#top" aria-label="BUY.KANS">
+          <div class="logo">BK</div>
+          <div>
+            <h1>BUY.KANS</h1>
+            <p>Школа • Офис • Творчество</p>
+          </div>
+        </a>
 
-    <!-- ✅ ВЕРХНЯЯ ВИЗИТКА: ТОЛЬКО СВЕРХУ, УХОДИТ ПРИ СКРОЛЛЕ -->
-    <div class="topCard">
-      <div class="topInner">
-
-        <div class="topRow">
-          <div class="brand">
-            <div class="logo">BK</div>
-            <div>
-              <h1>BUY.KANS</h1>
-              <p>Школа • Офис • Творчество</p>
-            </div>
+        <div class="navright">
+          <div class="chip" title="Поиск по товарам">
+            🔎 <input id="q" placeholder="Поиск: тетрадь, ручка, аракл, арт..." autocomplete="off" />
+            <button class="miniBtn" id="clearSearchBtn" type="button" title="Очистить поиск">✕</button>
           </div>
 
-          <div class="navright">
-            <div class="chip" title="Поиск по товарам">
-              🔎 <input id="q" placeholder="Поиск: тетрадь, ручка, арт..." autocomplete="off" />
-              <button class="miniBtn" id="clearSearchBtn" type="button" title="Очистить поиск">✕</button>
-            </div>
-
-            <button class="miniBtn circle" id="themeBtn" type="button" title="Тема">
-              <span class="ico">🌓</span><span class="lbl">Тема</span>
-            </button>
-
-            <button class="miniBtn primary circle" id="scrollCatalogBtn" type="button" title="Каталог">
-              <span class="ico">📦</span><span class="lbl">Каталог</span>
-            </button>
-
-            <a class="miniBtn circle" href="https://t.me/stationerybaisat" target="_blank" rel="noreferrer" title="Telegram">
-              <span class="ico">✈️</span><span class="lbl">Telegram</span>
-            </a>
-
-            <a class="miniBtn circle" href="https://wa.me/77074975195" target="_blank" rel="noreferrer" title="WhatsApp">
-              <span class="ico">💬</span><span class="lbl">WhatsApp</span>
-            </a>
-          </div>
+          <button class="miniBtn" id="themeBtn" type="button">🌓 Тема</button>
+          <button class="miniBtn primary" id="scrollCatalogBtn" type="button">Каталог</button>
+          <a class="miniBtn" href="https://t.me/stationerybaisat" target="_blank" rel="noreferrer">Telegram</a>
+          <a class="miniBtn" href="https://wa.me/77074975195" target="_blank" rel="noreferrer">WhatsApp</a>
         </div>
+      </div>
+    </div>
+  </div>
 
+  <div id="top" class="wrap">
+    <section class="hero">
+      <div class="card heroMain">
+        <div class="kicker">🧺 Корзина • 📄 PDF (таблица + фото) • 💬 WhatsApp</div>
         <h2 class="title">Каталог BUY.KANS</h2>
-        <p class="sub">Выбирай товары → вводи количество → смотри корзину → отправляй заказ в WhatsApp.</p>
+        <p class="sub">
+          Выбирай товары → вводи количество → отправляй заказ в WhatsApp.
+          В PDF будет таблица + фото + имя и город клиента.
+        </p>
 
         <div class="clientBox">
           <div class="field">
@@ -534,20 +406,20 @@
             <label for="clientCity">Город</label>
             <input id="clientCity" placeholder="Например: Алматы" autocomplete="address-level2" />
           </div>
+          <div class="clientHint">Данные сохраняются автоматически и добавятся в WhatsApp + PDF.</div>
         </div>
 
         <div class="ctaRow">
           <button class="miniBtn" id="clearCartBtn" type="button">🧹 Очистить корзину</button>
-          <button class="miniBtn" id="openCartBtn" type="button">🧺 Открыть корзину</button>
         </div>
       </div>
-    </div>
+    </section>
 
     <section id="catalog" class="section">
       <div class="sectionHead">
         <div>
           <h2>Каталог</h2>
-          <p id="resultsHint">Поиск по названию / артикулу</p>
+          <p id="resultsHint">Поиск по названию / описанию / артикулу</p>
         </div>
       </div>
 
@@ -555,40 +427,19 @@
     </section>
   </div>
 
-  <!-- bottom bar -->
   <div class="bar">
     <div class="left">
-      <span class="count" id="cartCount" title="Открыть корзину">Корзина: 0</span>
-      <small id="cartSum" title="Открыть корзину">Сумма: 0 ₸</small>
+      <span class="count" id="cartCount">Корзина: 0</span>
+      <small id="cartSum">Сумма: 0 ₸</small>
     </div>
     <div class="right">
       <button class="btn wa" id="waText" type="button">💬 Заказ в WhatsApp</button>
-      <button class="btn" id="pdfBtn" type="button">📄 PDF</button>
-      <button class="btn" id="sharePdfBtn" type="button">📤 Share</button>
+      <button class="btn" id="pdfBtn" type="button">📄 Скачать PDF</button>
+      <button class="btn" id="sharePdfBtn" type="button">📤 Поделиться PDF</button>
     </div>
   </div>
 
   <div class="toast" id="toast">Готово</div>
-
-  <!-- CART MODAL -->
-  <div class="modal" id="cartModal" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-modal="true" aria-label="Корзина">
-      <div class="sheetHead">
-        <b>🧺 Корзина</b>
-        <button class="x" id="closeCartBtn" type="button" aria-label="Закрыть">✕</button>
-      </div>
-      <div class="sheetBody" id="cartModalBody"></div>
-      <div class="sheetFoot">
-        <div class="sumBox">
-          <span>Итого:</span> <b id="cartModalTotal">0 ₸</b>
-        </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-          <button class="btn" id="cartModalClear" type="button">🧹 Очистить</button>
-          <button class="btn wa" id="cartModalSendWa" type="button">💬 Отправить</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- PDF AREA -->
   <div id="pdfArea" style="position:fixed; left:-99999px; top:0; width:794px; background:#fff; color:#111; padding:28px; font-family:Arial, sans-serif;">
@@ -640,189 +491,51 @@
   </div>
 
   <script>
+    // ===== BASE для картинок (чтобы работало на GitHub Pages) =====
     const BASE = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
     const SHOP = { phoneWa: "77074975195" };
 
-    // ✅ картинки положи в /images рядом с index.html
+    // ===== ТОВАРЫ =====
+    // ✅ картинки положи в папку /images рядом с index.html
     const PRODUCTS = [
-  {
-    id:"set-20006",
-    name:"Набор (арт 20006)",
-    price:1500,
-    img:BASE+"images/20006.jpg",
-    desc:"Набор с блокнотом и ручкой."
-  },
-  {
-    id:"demo-clock",
-    name:"Демонстрационный сағат",
-    price:180,
-    img:BASE+"images/demo-clock.jpg",
-    desc:"Учебные часы."
-  },
-  {
-    id:"notebook-2515",
-    name:"Блокнот Barbie (арт 2515)",
-    price:450,
-    img:BASE+"images/barbie-2515.jpg",
-    desc:"Блокнот Barbie."
-  },
-  {
-    id:"biser-307-10",
-    name:"Бисер — набор (арт 307-10)",
-    price:480,
-    img:BASE+"images/biser-307-10.jpg",
-    desc:"Набор бисера."
-  },
-  {
-    id:"stickers-smile",
-    name:"Наклейки «Смайлик»",
-    price:120,
-    img:BASE+"images/stickers-smile.jpg",
-    desc:"Наклейки."
-  },
-  {
-    id:"lupa-5x",
-    name:"Лупа с подсветкой (арт 5x)",
-    price:1800,
-    img: BASE + "images/lupa-5x.jpg",
-    desc:"Лупа с подсветкой. В коробке 40 шт."
-  },
-  {
-    id:"markers-5-1",
-    name:"Фломастеры (арт 5+1)",
-    price:120,
-    img: BASE + "images/markers-5-1.jpg",
-    desc:"Фломастеры 5+1."
-  },
-  {
-    id:"markers-7-1",
-    name:"Фломастеры (арт 7+1)",
-    price:180,
-    img: BASE + "images/markers-7-1.jpg",
-    desc:"Фломастеры 7+1."
-  },
-  {
-    id:"markers-9-1",
-    name:"Фломастеры (арт 9+1)",
-    price:250,
-    img: BASE + "images/markers-9-1.jpg",
-    desc:"Фломастеры 9+1."
-  },
-  {
-    id:"markers-1686-6",
-    name:"Фломастеры 6 цветов (арт 1686-6)",
-    price:100,
-    img: BASE + "images/markers-1686-6.jpg",
-    desc:"Фломастеры 6 цветов."
-  },
-  {
-    id:"markers-td-6865-06",
-    name:"Фломастеры 6 цветов (арт TD-6865-06)",
-    price:100,
-    img: BASE + "images/markers-td-6865-06.jpg",
-    desc:"Фломастеры 6 цветов."
-  },
-  {
-    id:"pikmi-stick",
-    name:"Пикми палочка",
-    price:150,
-    img: BASE + "images/pikmi-stick.jpg",
-    desc:"Пикми палочка."
-  },
-  {
-    id:"pikmi-stick-big",
-    name:"Большая пикми палочка",
-    price:450,
-    img: BASE + "images/pikmi-stick-big.jpg",
-    desc:"В пачке 12 шт."
-  },
-  {
-    id:"notebook-a5-580",
-    name:"Блокнот (арт A5-580)",
-    price:550,
-    img: BASE + "images/notebook-a5-580.jpg",
-    desc:"Блокнот A5-580."
-  },
-  {
-    id:"touch-marker-30",
-    name:"Touch маркеры 30 цветов",
-    price:1200,
-    img: BASE + "images/touch-marker-30.jpg",
-    desc:"Набор Touch маркеров, 30 цветов."
-  },
-  {
-    id:"notebook-5221",
-    name:"Блокнот (арт 5221)",
-    price:550,
-    img: BASE + "images/notebook-5221.jpg",
-    desc:"Блокнот 5221."
-  },
-  {
-    id:"notebook-yl-a5-805",
-    name:"Блокнот (арт YL-A5-805)",
-    price:550,
-    img: BASE + "images/notebook-yl-a5-805.jpg",
-    desc:"Блокнот YL-A5-805."
-  },
-  {
-    id:"notebook-2502",
-    name:"Блокнот (арт 2502)",
-    price:300,
-    img: BASE + "images/notebook-2502.jpg",
-    desc:"Блокнот 2502."
-  },
-  {
-    id:"notebook-7125-1",
-    name:"Блокнот (арт 7125-1)",
-    price:280,
-    img: BASE + "images/notebook-7125-1.jpg",
-    desc:"Блокнот 7125-1."
-  },
-  {
-    id:"coloring-4578",
-    name:"Раскраска (арт 4578)",
-    price:650,
-    img: BASE + "images/coloring-4578.jpg",
-    desc:"Раскраска 4578."
-  },
-  {
-    id:"plasticine-6",
-    name:"Пластилин 6 цветов (арт YL242802-6)",
-    price:260,
-    img: BASE + "images/plasticine-6.jpg",
-    desc:"Пластилин 6 цветов."
-  },
-  {
-    id:"plasticine-8",
-    name:"Пластилин 8 цветов (арт YL242802-8)",
-    price:325,
-    img: BASE + "images/plasticine-8.jpg",
-    desc:"Пластилин 8 цветов."
-  },
-  {
-    id:"plasticine-10",
-    name:"Пластилин 10 цветов (арт YL242802-10)",
-    price:420,
-    img: BASE + "images/plasticine-10.jpg",
-    desc:"Пластилин 10 цветов."
-  },
-  {
-    id:"plasticine-12",
-    name:"Пластилин 12 цветов (арт YL242802-12)",
-    price:450,
-    img: BASE + "images/plasticine-12.jpg",
-    desc:"Пластилин 12 цветов."
-  }
+      {
+        id: "set-a201",
+        name: "Набор — Арт A201",
+        price: 4500,
+        img: BASE + "images/a201.jpg",
+        desc: "Подарочный набор. Артикул: A201."
+      },
+      {
+        id: "notebook-qd-19943",
+        name: "Блокнот A5 — Арт QD-19943",
+        price: 1300, // ✅ ИЗМЕНЕНО: цена 1300 тг
+        img: BASE + "images/qd-19943.jpg",
+        desc: "Блокнот A5. Артикул: QD-19943."
+      },
+      {
+        id: "set-20006",
+        name: "Набор — Арт 20006",
+        price: 1500,
+        img: BASE + "images/20006.jpg",
+        desc: "Набор с блокнотом и ручкой. Артикул: 20006."
+      },
+      {
+        id: "demo-clock",
+        name: "Демонстрационный сағат (учебные часы)",
+        price: 180,
+        img: BASE + "images/demo-clock.jpg",
+        desc: "Обучающие часы для детей, подвижные стрелки."
+      }
+    ];
 
-];
-
+    // ===== DOM =====
     const elQ = document.getElementById("q");
     const clearSearchBtn = document.getElementById("clearSearchBtn");
     const resultsHint = document.getElementById("resultsHint");
+
     const elProducts = document.getElementById("products");
 
     const clearCartBtn = document.getElementById("clearCartBtn");
-    const openCartBtn = document.getElementById("openCartBtn");
     const scrollCatalogBtn = document.getElementById("scrollCatalogBtn");
 
     const themeBtn = document.getElementById("themeBtn");
@@ -844,19 +557,15 @@
     const pdfClientName = document.getElementById("pdfClientName");
     const pdfClientCity = document.getElementById("pdfClientCity");
 
-    const cartModal = document.getElementById("cartModal");
-    const cartModalBody = document.getElementById("cartModalBody");
-    const cartModalTotal = document.getElementById("cartModalTotal");
-    const closeCartBtn = document.getElementById("closeCartBtn");
-    const cartModalClear = document.getElementById("cartModalClear");
-    const cartModalSendWa = document.getElementById("cartModalSendWa");
-
+    // ===== CART =====
     const cart = new Map(); // id -> qty
 
+    // ===== UTILS =====
     const fmt = (n)=> new Intl.NumberFormat("ru-RU").format(Number(n||0));
     const escapeHtml = (s)=> String(s).replace(/[&<>"']/g, m=>({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
     }[m]));
+
     const norm = (s)=> String(s||"")
       .toLowerCase()
       .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
@@ -867,7 +576,7 @@
       elToast.textContent = msg;
       elToast.classList.add("show");
       clearTimeout(window.__t);
-      window.__t = setTimeout(()=> elToast.classList.remove("show"), 1300);
+      window.__t = setTimeout(()=> elToast.classList.remove("show"), 1600);
     }
 
     function saveCart(){
@@ -919,7 +628,7 @@
       elCartSum.textContent = `Сумма: ${fmt(cartTotal())} ₸`;
     }
 
-    // theme
+    // ===== THEME =====
     const savedTheme = localStorage.getItem("bk_theme");
     if(savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
     themeBtn.addEventListener("click", ()=>{
@@ -929,33 +638,31 @@
       localStorage.setItem("bk_theme", next);
     });
 
-    // search
+    // ===== SEARCH =====
     function applySearchInput(){ renderProducts(); }
     let searchTimer = null;
     function debounceSearch(){
       clearTimeout(searchTimer);
       searchTimer = setTimeout(applySearchInput, 120);
     }
-    elQ.addEventListener("input", debounceSearch);
-    elQ.addEventListener("keydown", (e)=>{ if(e.key==="Enter") applySearchInput(); });
-
     clearSearchBtn.addEventListener("click", ()=>{
       elQ.value = "";
       renderProducts();
       elQ.focus();
     });
 
+    // ===== PRODUCTS RENDER =====
     function setQty(id, qty){
       const n = Math.max(0, Math.min(9999, Number(qty)||0));
       if(n===0) cart.delete(id);
       else cart.set(id, n);
       saveCart();
       updateBar();
-      if(cartModal.classList.contains("show")) renderCartModal();
     }
 
     function renderProducts(){
       const q = norm(elQ.value);
+
       const list = PRODUCTS.filter(p=>{
         const hay = norm((p.name||"") + " " + (p.desc||""));
         return !q || hay.includes(q);
@@ -968,25 +675,24 @@
       elProducts.innerHTML = "";
 
       if(list.length===0){
-        elProducts.innerHTML = `<div class="empty">Ничего не найдено 😕</div>`;
+        elProducts.innerHTML = `<div class="empty">Ничего не найдено 😕<br>Попробуй другое слово или нажми ✕</div>`;
         updateBar();
         return;
       }
 
       list.forEach(p=>{
         const qty = cart.get(p.id) || 0;
-        const priceText = `${fmt(p.price)} ₸`;
+        const priceText = (Number(p.price)||0) > 0 ? `${fmt(p.price)} ₸` : `Цена: уточнить`;
 
         const card = document.createElement("div");
         card.className = "p";
         card.innerHTML = `
-<div class="imgBox">
-  <img src="${(p.images && p.images[0]) || p.img}" 
-       alt="${escapeHtml(p.name)}"
-       loading="lazy"
-       onerror="this.style.display='none'; this.parentElement.textContent='🖼 Фото нет';">
-</div>
-<h3>${escapeHtml(p.name)}</h3>
+          <div class="imgBox">
+            <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"
+              onerror="this.style.display='none'; this.parentElement.textContent='🖼 Фото не найдено';">
+          </div>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="desc">${escapeHtml(p.desc||"")}</p>
 
           <div class="row">
             <div class="price">
@@ -996,10 +702,13 @@
 
             <div class="qtyWrap">
               <button class="qtyBtn" type="button" data-minus="${escapeHtml(p.id)}">−</button>
+
               <input class="qtyInput" inputmode="numeric" type="number" min="0" step="1"
                      value="${qty}" data-id="${escapeHtml(p.id)}" aria-label="Количество" />
+
               <button class="qtyBtn" type="button" data-plus="${escapeHtml(p.id)}">+</button>
-              <button class="setBtn primary" type="button" data-set="${escapeHtml(p.id)}">ОК</button>
+
+              <button class="setBtn primary" type="button" data-set="${escapeHtml(p.id)}">Применить</button>
             </div>
           </div>
 
@@ -1019,27 +728,32 @@
 
         function applyFromInput(){
           const id = input.getAttribute("data-id");
-          setQty(id, input.value);
+          const val = input.value;
+          setQty(id, val);
           syncUI();
-          toast("Готово");
+          toast("Количество обновлено");
         }
 
+        // ✅ + / −
         btnPlus.addEventListener("click", ()=>{
           const cur = Number(cart.get(p.id) || input.value || 0);
           setQty(p.id, cur + 1);
           syncUI();
+          toast("+1");
         });
 
         btnMinus.addEventListener("click", ()=>{
           const cur = Number(cart.get(p.id) || input.value || 0);
           setQty(p.id, Math.max(0, cur - 1));
           syncUI();
+          toast("-1");
         });
 
+        // Применить / Enter
         btnSet.addEventListener("click", applyFromInput);
         input.addEventListener("keydown", (e)=>{ if(e.key==="Enter") applyFromInput(); });
 
-        // мягкое авто-применение (не скроллит страницу)
+        // мягкое авто-применение через 600мс после ввода
         let t=null;
         input.addEventListener("input", ()=>{
           clearTimeout(t);
@@ -1047,7 +761,7 @@
             const id = input.getAttribute("data-id");
             setQty(id, input.value);
             syncUI();
-          }, 350);
+          }, 600);
         });
 
         elProducts.appendChild(card);
@@ -1056,88 +770,26 @@
       updateBar();
     }
 
-    // scroll to catalog
-    scrollCatalogBtn.addEventListener("click", ()=>{
-      document.getElementById("catalog").scrollIntoView({behavior:"smooth", block:"start"});
-    });
-
-    // cart modal
-    function openCart(){
-      renderCartModal();
-      cartModal.classList.add("show");
-      cartModal.setAttribute("aria-hidden","false");
-    }
-    function closeCart(){
-      cartModal.classList.remove("show");
-      cartModal.setAttribute("aria-hidden","true");
-    }
-    function renderCartModal(){
-      const items = cartItems();
-      cartModalBody.innerHTML = "";
-
-      if(items.length===0){
-        cartModalBody.innerHTML = `<div class="empty" style="grid-column:1/-1;">Корзина пустая</div>`;
-        cartModalTotal.textContent = `0 ₸`;
-        return;
-      }
-
-      items.forEach(({p, qty})=>{
-        const row = document.createElement("div");
-        row.className = "cartRow";
-        row.innerHTML = `
-          <div class="cartImg">
-            <img src="${p.img}" alt="${escapeHtml(p.name)}" onerror="this.style.display='none'">
-          </div>
-          <div class="cartInfo">
-            <h4>${escapeHtml(p.name)}</h4>
-            <small>${fmt(p.price)} ₸ • сумма: ${fmt(p.price * qty)} ₸</small>
-          </div>
-          <div class="cartQty">
-            <button class="qbtn" type="button" data-cminus="${escapeHtml(p.id)}">−</button>
-            <div class="qval">${qty}</div>
-            <button class="qbtn" type="button" data-cplus="${escapeHtml(p.id)}">+</button>
-          </div>
-        `;
-        cartModalBody.appendChild(row);
-
-        row.querySelector("[data-cplus]").addEventListener("click", ()=>{
-          setQty(p.id, (cart.get(p.id)||0) + 1);
-        });
-        row.querySelector("[data-cminus]").addEventListener("click", ()=>{
-          setQty(p.id, Math.max(0, (cart.get(p.id)||0) - 1));
-        });
-      });
-
-      cartModalTotal.textContent = `${fmt(cartTotal())} ₸`;
-    }
-
-    cartModal.addEventListener("click", (e)=>{ if(e.target === cartModal) closeCart(); });
-    closeCartBtn.addEventListener("click", closeCart);
-    openCartBtn.addEventListener("click", openCart);
-    elCartCount.addEventListener("click", openCart);
-    elCartSum.addEventListener("click", openCart);
-
+    // ===== CLEAR CART =====
     clearCartBtn.addEventListener("click", ()=>{
       cart.clear();
       saveCart();
       renderProducts();
-      updateBar();
-      toast("Корзина очищена");
-      if(cartModal.classList.contains("show")) renderCartModal();
-    });
-
-    cartModalClear.addEventListener("click", ()=>{
-      cart.clear();
-      saveCart();
-      renderProducts();
-      renderCartModal();
-      updateBar();
       toast("Корзина очищена");
     });
 
+    scrollCatalogBtn.addEventListener("click", ()=>{
+      document.getElementById("catalog").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    // ===== WHATSAPP ORDER =====
     function buildTextOrder(){
       const items = cartItems();
       const c = getClient();
+
+      if(items.length===0){
+        return `Здравствуйте! Хочу сделать заказ ✅\nИмя: ${c.name||"—"}\nГород: ${c.city||"—"}\n\n(Корзина пустая)`;
+      }
 
       const lines = [];
       lines.push("Здравствуйте! Хочу сделать заказ ✅");
@@ -1149,7 +801,9 @@
       items.forEach((it, i)=>{
         const price = Number(it.p.price)||0;
         const sum = price * it.qty;
-        lines.push(`${i+1}) ${it.p.name} — ${it.qty} шт × ${fmt(price)} ₸ = ${fmt(sum)} ₸`);
+        const priceTxt = price>0 ? `${fmt(price)} ₸` : `цена уточнить`;
+        const sumTxt = price>0 ? `${fmt(sum)} ₸` : `—`;
+        lines.push(`${i+1}) ${it.p.name} — ${it.qty} шт × ${priceTxt} = ${sumTxt}`);
       });
 
       lines.push("");
@@ -1157,23 +811,17 @@
       return lines.join("\n");
     }
 
-    // ✅ Нажали WhatsApp снизу -> открываем корзину (просмотр перед отправкой)
     btnWaText.addEventListener("click", ()=>{
-      if(cartItems().length===0){ toast("Корзина пустая"); return; }
-      openCart();
-    });
-
-    cartModalSendWa.addEventListener("click", ()=>{
       const c = getClient();
-      if(!c.name){ toast("Введите имя"); clientName.focus(); return; }
-      if(!c.city){ toast("Введите город"); clientCity.focus(); return; }
+      if(!c.name){ toast("Введите имя клиента"); clientName.focus(); return; }
+      if(!c.city){ toast("Введите город клиента"); clientCity.focus(); return; }
 
       const text = buildTextOrder();
       const url = `https://wa.me/${SHOP.phoneWa}?text=${encodeURIComponent(text)}`;
       window.open(url, "_blank");
     });
 
-    // PDF
+    // ===== PDF =====
     function fillPdfArea(){
       const items = cartItems();
       const c = getClient();
@@ -1203,13 +851,13 @@
         tr.innerHTML = `
           <td style="padding:8px; border:1px solid #e6e6e6;">
             <img src="${it.p.img}" crossorigin="anonymous"
-                 style="width:48px; height:48px; object-fit:cover; border-radius:10px; border:1px solid #eee; background:#fff;"
+                 style="width:48px; height:48px; object-fit:contain; border-radius:10px; border:1px solid #eee; background:#fff;"
                  onerror="this.style.display='none'">
           </td>
           <td style="padding:10px; border:1px solid #e6e6e6;">${escapeHtml(it.p.name)}</td>
           <td style="padding:10px; border:1px solid #e6e6e6; text-align:center;">${it.qty}</td>
-          <td style="padding:10px; border:1px solid #e6e6e6; text-align:right;">${fmt(price)} ₸</td>
-          <td style="padding:10px; border:1px solid #e6e6e6; text-align:right;">${fmt(sum)} ₸</td>
+          <td style="padding:10px; border:1px solid #e6e6e6; text-align:right;">${price>0 ? fmt(price)+" ₸" : "—"}</td>
+          <td style="padding:10px; border:1px solid #e6e6e6; text-align:right;">${price>0 ? fmt(sum)+" ₸" : "—"}</td>
         `;
         pdfRows.appendChild(tr);
       });
@@ -1273,7 +921,7 @@
         a.click();
         a.remove();
         setTimeout(()=> URL.revokeObjectURL(url), 4000);
-        toast("PDF готов");
+        toast("PDF скачан");
       }catch(e){
         console.error(e);
         toast("Ошибка PDF");
@@ -1283,13 +931,19 @@
     btnSharePdf.addEventListener("click", async ()=>{
       try{
         if(cartItems().length===0){ toast("Корзина пустая"); return; }
+
+        toast("Готовлю PDF...");
         const blob = await makePdfBlob();
         const file = new File([blob], "BUY.KANS_order.pdf", { type: "application/pdf" });
 
         if (navigator.share && (!navigator.canShare || navigator.canShare({ files:[file] }))) {
           try{
-            await navigator.share({ title:"BUY.KANS — Заказ", text:"PDF заказа", files:[file] });
-            toast("Share");
+            await navigator.share({
+              title: "BUY.KANS — Заказ",
+              text: "PDF заказа",
+              files: [file]
+            });
+            toast("Открыто меню Share");
             return;
           }catch(err){
             if(String(err).toLowerCase().includes("abort")) return;
@@ -1304,18 +958,21 @@
         a.click();
         a.remove();
         setTimeout(()=> URL.revokeObjectURL(url), 4000);
-        toast("Скачано");
+
+        toast("Скачала PDF. Открой Файлы → Поделиться → WhatsApp");
       }catch(e){
         console.error(e);
-        toast("Не получилось");
+        toast("Не получилось поделиться");
       }
     });
 
-    // init
+    // ===== INIT =====
     loadClient();
     loadCart();
     renderProducts();
-    updateBar();
+
+    elQ.addEventListener("input", debounceSearch);
+    elQ.addEventListener("keydown", (e)=>{ if(e.key==="Enter") applySearchInput(); });
   </script>
 </body>
 </html>
