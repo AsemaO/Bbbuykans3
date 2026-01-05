@@ -110,6 +110,7 @@
       align-items:center;
       justify-content:center;
       gap:8px;
+      white-space:nowrap;
     }
     .miniBtn:hover{background: var(--card2); transform: translateY(-1px);}
     .miniBtn:active{transform: translateY(0) scale(.99);}
@@ -173,13 +174,9 @@
     .sectionHead h2{margin:0; font-size:18px}
     .sectionHead p{margin:0; color:var(--muted); font-size:12px; font-weight:900}
 
-    /* ✅ 2 товара в ряд */
     .products{margin-top:12px; display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;}
     @media (max-width: 620px){
-      .products{
-        grid-template-columns: repeat(2, 1fr);
-        gap:8px;
-      }
+      .products{grid-template-columns: repeat(2, 1fr); gap:8px;}
     }
 
     .p{
@@ -192,7 +189,6 @@
       overflow:hidden;
     }
 
-    /* фото квадрат + полностью видно */
     .imgBox{
       border-radius:18px; overflow:hidden; border:1px solid var(--border);
       background: var(--card);
@@ -335,22 +331,110 @@
     .toast.show{display:block; animation: pop .25s ease;}
     @keyframes pop{from{transform:translateX(-50%) translateY(-6px); opacity:.2} to{transform:translateX(-50%) translateY(0); opacity:1}}
 
+    /* ✅ КОМПАКТНАЯ МОБИЛКА: 2 товара в ряд + карточки меньше */
     @media (max-width: 560px){
-      .wrap{padding:14px;}
-      .navrow{flex-direction:column; align-items:stretch}
-      .navright{justify-content:flex-start}
-      .chip{width:100%}
-      .title{font-size:30px}
-      .sub{font-size:14px}
-      .heroMain{padding:16px}
-      .clientBox{grid-template-columns:1fr;}
+      .wrap{padding:8px;}
+      .navrow{flex-direction:column; align-items:stretch; gap:6px; padding:6px 0;}
+
+      .logo{width:32px; height:32px; border-radius:12px; font-size:13px;}
+      .brand{gap:10px;}
+      .brand h1{font-size:13px;}
+      .brand p{font-size:10px;}
+
+      .chip{
+        width:100%;
+        padding:6px 8px;
+        gap:6px;
+        border-radius:16px;
+      }
+      .chip input{font-size:12px;}
+
+      /* ✅ ВАЖНО: сетка кнопок */
+      .navright{
+        display:grid;
+        grid-template-columns: 1fr auto; /* поиск и рядом круглая кнопка Тема */
+        gap:6px;
+        width:100%;
+        justify-content:stretch;
+        align-items:center;
+      }
+
+      /* ❗ chip занимает всю первую колонку */
+      .navright .chip{
+        grid-column: 1 / 2;
+      }
+
+      /* ✅ Тема/Telegram/WhatsApp — круглые маленькие */
+      .navright #themeBtn,
+      .navright a.miniBtn[href*="t.me"],
+      .navright a.miniBtn[href*="wa.me"]{
+        width:44px;
+        height:44px;
+        padding:0;
+        border-radius:999px;
+        font-size:0;          /* скрываем текст */
+        line-height:0;
+        justify-content:center;
+      }
+
+      /* ✅ показываем только иконку внутри */
+      .navright #themeBtn::before{
+        content:"🌓";
+        font-size:18px;
+        line-height:1;
+      }
+
+      .navright a.miniBtn[href*="t.me"]::before{
+        content:"✈️";
+        font-size:18px;
+        line-height:1;
+      }
+
+      .navright a.miniBtn[href*="wa.me"]::before{
+        content:"💬";
+        font-size:18px;
+        line-height:1;
+      }
+
+      /* ✅ очищаем старые тексты (на всякий случай) */
+      .navright #themeBtn,
+      .navright a.miniBtn[href*="t.me"],
+      .navright a.miniBtn[href*="wa.me"]{
+        gap:0;
+      }
+
+      /* ✅ Каталог — широкий (как ты хочешь) */
+      .navright .miniBtn.primary{
+        grid-column: 1 / -1;
+        height:46px;
+        border-radius:18px;
+        font-size:14px;
+        padding:0 10px;
+      }
+
+      /* ✅ Телеграм + WhatsApp в одну строку справа/слева круглыми */
+      .navright a.miniBtn[href*="t.me"]{ grid-column: 1 / 2; justify-self:start; }
+      .navright a.miniBtn[href*="wa.me"]{ grid-column: 2 / 3; justify-self:end; }
+
+      /* карточки товаров компактнее */
+      .p{padding:10px; border-radius:18px;}
+      .imgBox{border-radius:14px; margin-bottom:8px;}
+      .imgBox img{padding:4px;}
+      .p h3{font-size:13px; margin:2px 0 4px; line-height:1.2;}
+      .p .desc{font-size:11px; line-height:1.35;}
+      .row{margin-top:8px; gap:8px;}
+      .price b{font-size:14px}
+      .price span{font-size:10px}
+      .qtyWrap{gap:6px}
+      .qtyInput{width:64px; padding:8px 10px}
+      .qtyBtn{width:34px; height:34px}
+      .setBtn{padding:8px 10px; font-size:12px}
 
       .bar{
         border-radius: 16px;
         flex-direction:column;
         align-items:stretch;
       }
-      .bar .left{justify-content:space-between}
       .bar .right{
         display:grid;
         grid-template-columns: 1fr 1fr;
@@ -358,91 +442,8 @@
       }
       #waText{grid-column:1/-1;}
     }
-
-    /* ✅ компактная мобилка (карточки) */
-    @media (max-width: 560px){
-      .p{
-        padding:10px;
-        border-radius:18px;
-      }
-      .imgBox{
-        border-radius:14px;
-        margin-bottom:8px;
-      }
-      .imgBox img{padding:4px;}
-
-      .p h3{
-        font-size:13px;
-        margin:2px 0 4px;
-        line-height:1.2;
-      }
-      .p .desc{
-        font-size:11px;
-        line-height:1.35;
-      }
-      .row{
-        margin-top:8px;
-        gap:8px;
-      }
-      .price b{font-size:14px}
-      .price span{font-size:10px}
-
-      .qtyWrap{gap:6px}
-      .qtyInput{width:64px; padding:8px 10px}
-      .qtyBtn{width:34px; height:34px}
-      .setBtn{padding:8px 10px; font-size:12px}
-    }
-
-    /* ✅ НОВОЕ: ультра-компактная шапка + кнопки в 2 колонки */
-    @media (max-width: 560px){
-      .wrap{ padding:8px; }
-
-      .navrow{
-        gap:6px;
-        padding:6px 0;
-      }
-
-      .logo{
-        width:32px;
-        height:32px;
-        border-radius:12px;
-        font-size:13px;
-      }
-
-      .brand{ gap:10px; }
-      .brand h1{ font-size:13px; }
-      .brand p{ font-size:10px; }
-
-      .chip{
-        padding:6px 8px;
-        gap:6px;
-        border-radius:16px;
-      }
-      .chip input{ font-size:12px; }
-
-      .navright{
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-        gap:6px;
-        width:100%;
-        justify-content:stretch;
-      }
-
-      .miniBtn{
-        padding:7px 8px;
-        font-size:12px;
-        border-radius:14px;
-      }
-
-      .miniBtn.primary{
-        grid-column:1 / -1;
-        padding:8px;
-        font-size:13px;
-      }
-    }
   </style>
 
-  <!-- PDF libs -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
@@ -528,7 +529,6 @@
 
   <div class="toast" id="toast">Готово</div>
 
-  <!-- PDF AREA -->
   <div id="pdfArea" style="position:fixed; left:-99999px; top:0; width:794px; background:#fff; color:#111; padding:28px; font-family:Arial, sans-serif;">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
       <div>
@@ -547,7 +547,6 @@
     </div>
 
     <hr style="border:none; border-top:1px solid #e6e6e6; margin:14px 0 16px;">
-
     <div style="margin-top:8px; font-size:14px; font-weight:800;">Список товаров</div>
 
     <table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:13px;">
