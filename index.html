@@ -1277,15 +1277,16 @@
   if(cartItems().length === 0){ toast("Корзина пустая"); return; }
 
   const text = buildTextOrder();
-  const url = `https://wa.me/${SHOP.phoneWa}?text=${encodeURIComponent(text)}`;
+  const waMe = `https://wa.me/${SHOP.phoneWa}?text=${encodeURIComponent(text)}`;
 
-  // ✅ Встроенный браузер Instagram лучше принимает переход через location
-  window.location.href = url;
+  // ✅ iOS/Instagram: лучше assign
+  window.location.assign(waMe);
 
-  // (запасной вариант — если вдруг не сработает)
+  // ✅ запасной вариант (особенно на Android)
   setTimeout(()=> {
-    try { window.open(url, "_blank"); } catch(e) {}
-  }, 300);
+    const intent = `intent://send?phone=${SHOP.phoneWa}&text=${encodeURIComponent(text)}#Intent;scheme=smsto;package=com.whatsapp;end`;
+    window.location.href = intent;
+  }, 350);
 });
 
     // PDF
