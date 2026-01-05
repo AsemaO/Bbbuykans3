@@ -52,12 +52,17 @@
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:16px;}
 
+    /* NAV (убегает при скролле вниз) */
     .nav{
       position: sticky; top:0; z-index:60;
       backdrop-filter: blur(10px);
       background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0));
       border-bottom: 1px solid rgba(255,255,255,.06);
+      transform: translateY(0);
+      transition: transform .22s ease;
+      will-change: transform;
     }
+    .nav.nav--hide{ transform: translateY(-110%); }
     [data-theme="light"] .nav{
       background: linear-gradient(to bottom, rgba(255,255,255,.80), rgba(255,255,255,0));
       border-bottom: 1px solid rgba(0,0,0,.06);
@@ -106,10 +111,7 @@
       user-select:none;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
       transition: transform .15s ease, background .15s ease;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
       white-space:nowrap;
     }
     .miniBtn:hover{background: var(--card2); transform: translateY(-1px);}
@@ -132,17 +134,8 @@
     .hero{padding:14px 0 10px;}
     .heroMain{padding:18px;}
 
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: var(--card);
-      color:var(--muted);
-      font-size:12px;
-      font-weight:900;
-    }
-    .title{margin:14px 0 8px; font-size:34px; line-height:1.05; letter-spacing:-.8px;}
+    /* ✅ УБРАЛИ строку "🧺 Корзина • ..." (kicker) */
+    .title{margin:6px 0 8px; font-size:34px; line-height:1.05; letter-spacing:-.8px;}
     .sub{margin:0; color:var(--muted); font-size:14px; line-height:1.6; max-width:60ch}
 
     .clientBox{
@@ -165,57 +158,88 @@
       color: var(--text);
       outline:none;
     }
-    .clientHint{grid-column:1 / -1; color:var(--muted); font-size:12px; margin-top:2px}
-
+    /* ✅ УБРАЛИ подсказку "Данные сохраняются..." */
     .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
 
-    .section{padding:16px 0 110px}
+    .section{padding:12px 0 110px}
     .sectionHead{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap}
     .sectionHead h2{margin:0; font-size:18px}
     .sectionHead p{margin:0; color:var(--muted); font-size:12px; font-weight:900}
 
-    .products{margin-top:12px; display:grid; grid-template-columns: repeat(2, 1fr); gap:12px;}
-    @media (max-width: 620px){
-      .products{grid-template-columns: repeat(2, 1fr); gap:8px;}
+    /* ✅ 2 в ряд всегда (как на примере), на очень узких тоже 2 */
+    .products{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:12px;
     }
 
+    /* ✅ Карточка как в примере: картинка сверху, ниже текст */
     .p{
       padding:12px;
-      border-radius: var(--r2);
+      border-radius: 18px;
       border:1px solid var(--border);
       background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
       box-shadow: 0 16px 44px rgba(0,0,0,.16);
-      position:relative;
       overflow:hidden;
     }
 
+    /* ✅ Фото как в примере: прямоугольник, заполняет (cover) */
     .imgBox{
-      border-radius:18px; overflow:hidden; border:1px solid var(--border);
-      background: var(--card);
-      aspect-ratio: 1 / 1;
-      display:grid; place-items:center;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      aspect-ratio: 4 / 3;  /* ближе к карточкам на примере */
+      display:block;
       margin-bottom:10px;
     }
     .imgBox img{
-      width:100%; height:100%;
-      object-fit:contain;
+      width:100%;
+      height:100%;
+      object-fit:cover; /* как в интернет-магазинах */
       display:block;
-      padding:6px;
     }
 
-    .p h3{margin:2px 0 6px; font-size:15px}
-    .p .desc{margin:0; color:var(--muted); font-size:12px; line-height:1.55}
+    .p h3{
+      margin:0 0 6px;
+      font-size:14px;
+      line-height:1.25;
+      font-weight:1000;
+    }
 
-    .row{margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
+    /* ✅ чтобы было компактно — описание спрячем на мобилке (ниже) */
+    .p .desc{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .row{
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
     .price{display:flex; flex-direction:column; gap:2px;}
-    .price b{font-size:16px}
+    .price b{font-size:15px}
     .price span{color:var(--muted); font-size:11px}
 
-    .qtyWrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .qtyWrap{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:nowrap;
+    }
+
     .qtyInput{
-      width:88px;
-      padding:10px 12px;
-      border-radius:999px;
+      width:52px;
+      padding:8px 8px;
+      border-radius:12px;
       border:1px solid var(--border);
       background: var(--card);
       color: var(--text);
@@ -225,8 +249,8 @@
     }
 
     .qtyBtn{
-      width:38px; height:38px;
-      border-radius:999px;
+      width:34px; height:34px;
+      border-radius:12px;
       border:1px solid var(--border);
       background: var(--card);
       color: var(--text);
@@ -241,9 +265,10 @@
     .qtyBtn:hover{transform: translateY(-1px); background: var(--card2);}
     .qtyBtn:active{transform: translateY(0) scale(.99);}
 
+    /* ✅ На карточках "Применить" сделаем меньше */
     .setBtn{
-      padding:10px 12px;
-      border-radius:999px;
+      padding:8px 10px;
+      border-radius:12px;
       border:1px solid var(--border);
       background: var(--card);
       color:var(--text);
@@ -251,6 +276,7 @@
       font-weight:1000;
       transition: transform .15s ease, background .15s ease;
       box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      font-size:12px;
     }
     .setBtn:hover{transform: translateY(-1px); background: var(--card2);}
     .setBtn.primary{border:0; color:#fff; background: linear-gradient(135deg, var(--brand2), var(--brand));}
@@ -331,104 +357,43 @@
     .toast.show{display:block; animation: pop .25s ease;}
     @keyframes pop{from{transform:translateX(-50%) translateY(-6px); opacity:.2} to{transform:translateX(-50%) translateY(0); opacity:1}}
 
-    /* ✅ КОМПАКТНАЯ МОБИЛКА: 2 товара в ряд + карточки меньше */
+    /* ✅ МОБИЛКА: делаем всё компактнее, как на примере */
     @media (max-width: 560px){
-      .wrap{padding:8px;}
-      .navrow{flex-direction:column; align-items:stretch; gap:6px; padding:6px 0;}
-
-      .logo{width:32px; height:32px; border-radius:12px; font-size:13px;}
-      .brand{gap:10px;}
-      .brand h1{font-size:13px;}
+      .wrap{padding:10px;}
+      .navrow{gap:8px; padding:8px 0;}
+      .logo{width:34px; height:34px; border-radius:12px; font-size:13px;}
+      .brand h1{font-size:14px;}
       .brand p{font-size:10px;}
 
-      .chip{
-        width:100%;
-        padding:6px 8px;
-        gap:6px;
-        border-radius:16px;
-      }
-      .chip input{font-size:12px;}
+      .chip{width:100%; padding:8px 10px;}
+      .chip input{font-size:13px;}
 
-      /* ✅ ВАЖНО: сетка кнопок */
-      .navright{
-        display:grid;
-        grid-template-columns: 1fr auto; /* поиск и рядом круглая кнопка Тема */
-        gap:6px;
-        width:100%;
-        justify-content:stretch;
-        align-items:center;
-      }
+      /* кнопки шапки компактнее */
+      .miniBtn{padding:9px 10px; font-size:13px;}
 
-      /* ❗ chip занимает всю первую колонку */
-      .navright .chip{
-        grid-column: 1 / 2;
-      }
+      /* hero компактнее */
+      .heroMain{padding:14px;}
+      .title{font-size:24px; margin:0 0 6px;}
+      .sub{font-size:13px; line-height:1.45;}
 
-      /* ✅ Тема/Telegram/WhatsApp — круглые маленькие */
-      .navright #themeBtn,
-      .navright a.miniBtn[href*="t.me"],
-      .navright a.miniBtn[href*="wa.me"]{
-        width:44px;
-        height:44px;
-        padding:0;
-        border-radius:999px;
-        font-size:0;          /* скрываем текст */
-        line-height:0;
-        justify-content:center;
-      }
+      .clientBox{grid-template-columns:1fr; padding:12px;}
+      .field input{padding:11px 11px;}
 
-      /* ✅ показываем только иконку внутри */
-      .navright #themeBtn::before{
-        content:"🌓";
-        font-size:18px;
-        line-height:1;
-      }
+      /* карточки товаров плотнее */
+      .products{gap:10px;}
+      .p{padding:10px; border-radius:16px;}
+      .imgBox{border-radius:12px; margin-bottom:8px;}
+      .p h3{font-size:13px; margin-bottom:6px;}
 
-      .navright a.miniBtn[href*="t.me"]::before{
-        content:"✈️";
-        font-size:18px;
-        line-height:1;
-      }
+      /* ✅ скрываем описание на мобилке (как в магазинах, чтобы не было длинно) */
+      .p .desc{display:none;}
 
-      .navright a.miniBtn[href*="wa.me"]::before{
-        content:"💬";
-        font-size:18px;
-        line-height:1;
-      }
+      .price b{font-size:14px;}
+      .price span{font-size:10px;}
 
-      /* ✅ очищаем старые тексты (на всякий случай) */
-      .navright #themeBtn,
-      .navright a.miniBtn[href*="t.me"],
-      .navright a.miniBtn[href*="wa.me"]{
-        gap:0;
-      }
-
-      /* ✅ Каталог — широкий (как ты хочешь) */
-      .navright .miniBtn.primary{
-        grid-column: 1 / -1;
-        height:46px;
-        border-radius:18px;
-        font-size:14px;
-        padding:0 10px;
-      }
-
-      /* ✅ Телеграм + WhatsApp в одну строку справа/слева круглыми */
-      .navright a.miniBtn[href*="t.me"]{ grid-column: 1 / 2; justify-self:start; }
-      .navright a.miniBtn[href*="wa.me"]{ grid-column: 2 / 3; justify-self:end; }
-
-      /* карточки товаров компактнее */
-      .p{padding:10px; border-radius:18px;}
-      .imgBox{border-radius:14px; margin-bottom:8px;}
-      .imgBox img{padding:4px;}
-      .p h3{font-size:13px; margin:2px 0 4px; line-height:1.2;}
-      .p .desc{font-size:11px; line-height:1.35;}
-      .row{margin-top:8px; gap:8px;}
-      .price b{font-size:14px}
-      .price span{font-size:10px}
-      .qtyWrap{gap:6px}
-      .qtyInput{width:64px; padding:8px 10px}
-      .qtyBtn{width:34px; height:34px}
-      .setBtn{padding:8px 10px; font-size:12px}
+      .qtyBtn{width:32px; height:32px; border-radius:10px;}
+      .qtyInput{width:48px; padding:7px 7px; border-radius:10px;}
+      .setBtn{padding:7px 9px; border-radius:10px; font-size:12px;}
 
       .bar{
         border-radius: 16px;
@@ -449,7 +414,7 @@
 </head>
 
 <body>
-  <div class="nav">
+  <div class="nav" id="topNav">
     <div class="wrap">
       <div class="navrow">
         <a class="brand" href="#top" aria-label="BUY.KANS">
@@ -478,7 +443,7 @@
   <div id="top" class="wrap">
     <section class="hero">
       <div class="card heroMain">
-        <div class="kicker">🧺 Корзина • 📄 PDF (таблица + фото) • 💬 WhatsApp</div>
+        <!-- ✅ удалили kicker -->
         <h2 class="title">Каталог BUY.KANS</h2>
         <p class="sub">
           Выбирай товары → вводи количество → отправляй заказ в WhatsApp.
@@ -494,7 +459,7 @@
             <label for="clientCity">Город</label>
             <input id="clientCity" placeholder="Например: Алматы" autocomplete="address-level2" />
           </div>
-          <div class="clientHint">Данные сохраняются автоматически и добавятся в WhatsApp + PDF.</div>
+          <!-- ✅ удалили подсказку "Данные сохраняются..." -->
         </div>
 
         <div class="ctaRow">
@@ -529,6 +494,7 @@
 
   <div class="toast" id="toast">Готово</div>
 
+  <!-- PDF AREA -->
   <div id="pdfArea" style="position:fixed; left:-99999px; top:0; width:794px; background:#fff; color:#111; padding:28px; font-family:Arial, sans-serif;">
     <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
       <div>
@@ -547,6 +513,7 @@
     </div>
 
     <hr style="border:none; border-top:1px solid #e6e6e6; margin:14px 0 16px;">
+
     <div style="margin-top:8px; font-size:14px; font-weight:800;">Список товаров</div>
 
     <table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:13px;">
@@ -577,9 +544,11 @@
   </div>
 
   <script>
+    // ===== BASE для картинок (GitHub Pages) =====
     const BASE = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
     const SHOP = { phoneWa: "77074975195" };
 
+    // ===== ТОВАРЫ =====
     const PRODUCTS = [
       { id:"set-a201", name:"Набор — Арт A201", price:4500, img:BASE+"images/a201.jpg", desc:"Подарочный набор. Артикул: A201." },
       { id:"notebook-qd-19943", name:"Блокнот A5 — Арт QD-19943", price:1300, img:BASE+"images/qd-19943.jpg", desc:"Блокнот A5. Артикул: QD-19943." },
@@ -587,11 +556,14 @@
       { id:"demo-clock", name:"Демонстрационный сағат (учебные часы)", price:180, img:BASE+"images/demo-clock.jpg", desc:"Обучающие часы для детей, подвижные стрелки." }
     ];
 
+    // ===== DOM =====
+    const topNav = document.getElementById("topNav");
+
     const elQ = document.getElementById("q");
     const clearSearchBtn = document.getElementById("clearSearchBtn");
     const resultsHint = document.getElementById("resultsHint");
-    const elProducts = document.getElementById("products");
 
+    const elProducts = document.getElementById("products");
     const clearCartBtn = document.getElementById("clearCartBtn");
     const scrollCatalogBtn = document.getElementById("scrollCatalogBtn");
 
@@ -614,8 +586,10 @@
     const pdfClientName = document.getElementById("pdfClientName");
     const pdfClientCity = document.getElementById("pdfClientCity");
 
-    const cart = new Map();
+    // ===== CART =====
+    const cart = new Map(); // id -> qty
 
+    // ===== UTILS =====
     const fmt = (n)=> new Intl.NumberFormat("ru-RU").format(Number(n||0));
     const escapeHtml = (s)=> String(s).replace(/[&<>"']/g, m=>({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
@@ -683,6 +657,7 @@
       elCartSum.textContent = `Сумма: ${fmt(cartTotal())} ₸`;
     }
 
+    // ===== THEME =====
     const savedTheme = localStorage.getItem("bk_theme");
     if(savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
     themeBtn.addEventListener("click", ()=>{
@@ -692,6 +667,20 @@
       localStorage.setItem("bk_theme", next);
     });
 
+    // ===== NAV AUTO-HIDE ON SCROLL =====
+    let lastY = window.scrollY;
+    window.addEventListener("scroll", ()=>{
+      const y = window.scrollY;
+      const goingDown = y > lastY;
+      if(goingDown && y > 90){
+        topNav.classList.add("nav--hide");
+      }else{
+        topNav.classList.remove("nav--hide");
+      }
+      lastY = y;
+    }, { passive:true });
+
+    // ===== SEARCH =====
     function applySearchInput(){ renderProducts(); }
     let searchTimer = null;
     function debounceSearch(){
@@ -704,6 +693,7 @@
       elQ.focus();
     });
 
+    // ===== PRODUCTS RENDER =====
     function setQty(id, qty){
       const n = Math.max(0, Math.min(9999, Number(qty)||0));
       if(n===0) cart.delete(id);
@@ -743,6 +733,7 @@
             <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy"
               onerror="this.style.display='none'; this.parentElement.textContent='🖼 Фото не найдено';">
           </div>
+
           <h3>${escapeHtml(p.name)}</h3>
           <p class="desc">${escapeHtml(p.desc||"")}</p>
 
@@ -754,13 +745,10 @@
 
             <div class="qtyWrap">
               <button class="qtyBtn" type="button" data-minus="${escapeHtml(p.id)}">−</button>
-
               <input class="qtyInput" inputmode="numeric" type="number" min="0" step="1"
                      value="${qty}" data-id="${escapeHtml(p.id)}" aria-label="Количество" />
-
               <button class="qtyBtn" type="button" data-plus="${escapeHtml(p.id)}">+</button>
-
-              <button class="setBtn primary" type="button" data-set="${escapeHtml(p.id)}">Применить</button>
+              <button class="setBtn primary" type="button" data-set="${escapeHtml(p.id)}">ОК</button>
             </div>
           </div>
 
@@ -790,14 +778,12 @@
           const cur = Number(cart.get(p.id) || input.value || 0);
           setQty(p.id, cur + 1);
           syncUI();
-          toast("+1");
         });
 
         btnMinus.addEventListener("click", ()=>{
           const cur = Number(cart.get(p.id) || input.value || 0);
           setQty(p.id, Math.max(0, cur - 1));
           syncUI();
-          toast("-1");
         });
 
         btnSet.addEventListener("click", applyFromInput);
@@ -810,7 +796,7 @@
             const id = input.getAttribute("data-id");
             setQty(id, input.value);
             syncUI();
-          }, 600);
+          }, 400);
         });
 
         elProducts.appendChild(card);
@@ -819,6 +805,7 @@
       updateBar();
     }
 
+    // ===== CLEAR CART =====
     clearCartBtn.addEventListener("click", ()=>{
       cart.clear();
       saveCart();
@@ -830,6 +817,7 @@
       document.getElementById("catalog").scrollIntoView({behavior:"smooth", block:"start"});
     });
 
+    // ===== WHATSAPP ORDER =====
     function buildTextOrder(){
       const items = cartItems();
       const c = getClient();
@@ -868,6 +856,7 @@
       window.open(url, "_blank");
     });
 
+    // ===== PDF =====
     function fillPdfArea(){
       const items = cartItems();
       const c = getClient();
@@ -897,7 +886,7 @@
         tr.innerHTML = `
           <td style="padding:8px; border:1px solid #e6e6e6;">
             <img src="${it.p.img}" crossorigin="anonymous"
-                 style="width:48px; height:48px; object-fit:contain; border-radius:10px; border:1px solid #eee; background:#fff;"
+                 style="width:48px; height:48px; object-fit:cover; border-radius:10px; border:1px solid #eee; background:#fff;"
                  onerror="this.style.display='none'">
           </td>
           <td style="padding:10px; border:1px solid #e6e6e6;">${escapeHtml(it.p.name)}</td>
@@ -1012,6 +1001,7 @@
       }
     });
 
+    // ===== INIT =====
     loadClient();
     loadCart();
     renderProducts();
