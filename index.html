@@ -1,3 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BUY.KANS — Канцелярия</title>
+  <meta name="description" content="Каталог BUY.KANS с фото. Корзина. PDF заказ с таблицей и картинками. Отправка в WhatsApp." />
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.66);
+      --border:rgba(255,255,255,.12);
+
+      --brand:#ff3d7f;
+      --brand2:#7c5cff;
+      --ok:#25d366;
+
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --r:18px;
+      --r2:26px;
+      --max:1100px;
+    }
+
+    [data-theme="light"]{
+      --bg:#f6f9ff;
+      --card:rgba(0,0,0,.04);
+      --card2:rgba(0,0,0,.07);
+      --text:rgba(10,14,25,.92);
+      --muted:rgba(10,14,25,.62);
+      --border:rgba(0,0,0,.10);
+      --shadow:0 18px 50px rgba(40,60,120,.16);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(124,92,255,.35), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(255,61,127,.30), transparent 60%),
+        radial-gradient(900px 700px at 50% 100%, rgba(42,167,227,.22), transparent 65%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:16px;}
+
+    /* =========================
+       ✅ ВЕРХНЯЯ ВИЗИТКА (НЕ fixed, НЕ sticky)
+       Она стоит ТОЛЬКО сверху и уходит при скролле.
+       ========================= */
+    .topCard{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0));
+      border-radius: var(--r2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .topInner{
+      padding:14px;
+    }
+
+    .topRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand{display:flex; align-items:center; gap:12px;}
+    .logo{
+      width:44px; height:44px; border-radius:16px;
+      display:grid; place-items:center; font-weight:1000;
+      background: linear-gradient(135deg, var(--brand2), var(--brand));
+      box-shadow: 0 12px 34px rgba(124,92,255,.25);
+    }
+    .brand h1{margin:0; font-size:16px; letter-spacing:.5px}
+    .brand p{margin:0; font-size:12px; color:var(--muted)}
+
+    .navright{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap:wrap; justify-content:flex-end;
+    }
+
+    .chip{
+      border:1px solid var(--border);
+      background: var(--card);
+      border-radius:999px;
+      padding:10px 12px;
+      display:flex; align-items:center; gap:10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      width:min(520px, 100%);
+      flex: 1 1 380px;
+    }
+    .chip input{
+      border:0; outline:0; background:transparent;
+      color:var(--text);
+      width:100%;
+      font-size:14px;
+    }
+
+    .miniBtn{
+      border:1px solid var(--border);
+      background: var(--card);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:900;
+      user-select:none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      transition: transform .15s ease, background .15s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      white-space:nowrap;
+    }
+    .miniBtn:hover{background: var(--card2); transform: translateY(-1px);}
+    .miniBtn:active{transform: translateY(0) scale(.99);}
+    .miniBtn.primary{
+      border:0;
+      color:#fff;
+      background: linear-gradient(135deg, var(--brand2), var(--brand));
+    }
+
+    /* ✅ круглые кнопки */
+    .miniBtn.circle{
+      width:44px; height:44px;
+      padding:0;
+      border-radius:999px;
+    }
+    .miniBtn.circle .lbl{display:none;}
+    .miniBtn.circle .ico{font-size:18px; line-height:1;}
 
     .title{
       margin:12px 0 6px;
@@ -673,17 +812,7 @@
     price:450,
     img: BASE + "images/plasticine-12.jpg",
     desc:"Пластилин 12 цветов."
-  },
-        {
-  id:"folder-a4",
-  name:"Пластиковая папка-портфель A4",
-  price:650,
-  imgs: [
-    BASE + "images/folder-a4-1.jpg",
-    BASE + "images/folder-a4-2.jpg"
-  ],
-  desc:"Папка для документов A4"
-}
+  }
 
 ];
 
@@ -1189,3 +1318,5 @@
   </script>
 </body>
 </html>
+
+
